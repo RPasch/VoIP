@@ -139,7 +139,6 @@ public class Client {
             out.writeUTF("!");
             out.writeUTF(msg_choice);
             madeCall = true;
-            System.out.println("JUST CALLED START CALL IN CLIENT.JAVA");
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }

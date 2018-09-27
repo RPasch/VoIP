@@ -28,25 +28,44 @@ public class waitForMessage extends Thread {
     public static void createCallThread(String userIPtoCall, String userNametoCall) {
         
         if(!Client.madeCall){
-            System.out.println("userIPtoCall  :  " + userIPtoCall + "userNametoCall  :  " + userNametoCall);
             boolean answer = false;
             JDialog.setDefaultLookAndFeelDecorated(true);
             int response = JOptionPane.showConfirmDialog(null,userNametoCall +  " is calling.", "Answer?",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
-                answer = false;
-    //            TODO : deal with reject
+                try {
+                    answer = false;
+                    //            TODO : deal with reject
+                    Client.out.writeUTF("no");
+                } catch (IOException ex) {
+                    Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else if (response == JOptionPane.YES_OPTION) {
                 answer = true;
-                
+                try {
+                    answer = false;
+                    //            TODO : deal with reject
+                    Client.out.writeUTF("yes");
+                } catch (IOException ex) {
+                    Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 CallThread callThread = new CallThread(userIPtoCall);
                 callThread.start();
                 
             }
         } else{
-            Client.madeCall = false;
-            CallThread callThread = new CallThread(userIPtoCall);
-            callThread.start();
+            try {
+                Client.madeCall = false;
+                String response = Client.in.readUTF();
+                if(response.equals("yes")){
+                    CallThread callThread = new CallThread(userIPtoCall);
+                    callThread.start();
+                } else {
+                    JOptionPane.showMessageDialog(null, userNametoCall + " declined your call.");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
