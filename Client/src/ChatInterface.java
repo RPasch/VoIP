@@ -301,6 +301,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void callBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callBTNActionPerformed
         String msg_choice = chat_choice_dropdown.getSelectedItem();
         Client.startCall(msg_choice);
+        System.out.println("msg_choice " + msg_choice);
     }//GEN-LAST:event_callBTNActionPerformed
     //Prints the received message in the chat_txt
     public void printMsg(String msg, String FromWho) {

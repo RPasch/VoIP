@@ -87,6 +87,7 @@ public class waitForMessage extends Thread {
                 case '!':
                     String userIPtoCall = Client.receiveMsg();
                     String userNametoCall = Client.receiveMsg();
+                    System.out.println("RECEIVED !!!!!!!!!!");
                     createCallThread(userIPtoCall, userNametoCall);
                 default:
                     String who = anything;
