@@ -52,7 +52,8 @@ public class SocketHandler implements Runnable {
                     //call code goes here
                     String usernameTo = message;
                     Server.sendCallRequest(username, usernameTo);
-                    System.out.println("GOT THE ! !!!!");
+                    String callResponse = Server.listOfUsers.get(usernameTo).in.readUTF();
+                    Server.sendCallResponse(callResponse, username);
                 } else {
                     Server.whisper(username, toUser, message);
                 }

@@ -16,7 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Server extends Thread{
+public class Server extends Thread {
+
     static OutputStream outFromServer;
     static DataOutputStream out;
     static InputStream inFromClient;
@@ -24,14 +25,12 @@ public class Server extends Thread{
     private static InputStream terminalIn = null;
     private static BufferedReader br = null;
     public static ConcurrentHashMap<String, SocketHandler> listOfUsers = new ConcurrentHashMap<>();
-    
+
     public static void main(String[] args) {
         int portNumber = 8000;
         ServerSocket serverSocket = null;
-        Socket clientSocket = null;        
-        
-        
-        
+        Socket clientSocket = null;
+
         try {
             serverSocket = new ServerSocket(portNumber);
             System.out.println(serverSocket);
@@ -39,84 +38,82 @@ public class Server extends Thread{
             System.exit(0);
         }
 
-        SocketHandler sh = null;    
+        SocketHandler sh = null;
         try {
             clientSocket = serverSocket.accept();
-            
+
             inFromClient = clientSocket.getInputStream();
             in = new DataInputStream(inFromClient);
             outFromServer = clientSocket.getOutputStream();
             out = new DataOutputStream(outFromServer);
-            
+
             out.writeUTF("");
-            
+
             String username = in.readUTF();
-            System.out.println("Welcome: "+username+" to the chat");
-            
+            System.out.println("Welcome: " + username + " to the chat");
+
             sh = new SocketHandler(username, clientSocket);
-            
+
             Thread t = new Thread(sh);
             t.start();
-                
+
             listOfUsers.put(username, sh);
-                        
+
         } catch (Exception e) {
-                System.err.println(e);
+            System.err.println(e);
         }
 
         ClientConnecter connector = new ClientConnecter(serverSocket, clientSocket);
         connector.start();
-        
+
         try {
-            
+
             outFromServer = clientSocket.getOutputStream();
             out = new DataOutputStream(outFromServer);
-            
+
             String userList = getListOfUsers();
-            out.writeUTF("&"+userList);
-            
+            out.writeUTF("&" + userList);
+
         } catch (Exception e) {
-            System.err.println("SERVER: "+ e);
+            System.err.println("SERVER: " + e);
         }
-                
+
     }
-    
-    
-    
+
     public static String getListOfUsers() {
         String userList = "";
-        
-        if(!listOfUsers.isEmpty()){
+
+        if (!listOfUsers.isEmpty()) {
             for (String key : listOfUsers.keySet()) {
                 userList = userList + key + ",";
             }
         }
 
-        if (userList != ""){
-            userList = userList.substring(0, userList.length() - 1);        
+        if (userList != "") {
+            userList = userList.substring(0, userList.length() - 1);
         }
-        
+
         return userList;
     }
-    
-    public static void sendUserList(String userList){
+
+    public static void sendUserList(String userList) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
-        
+
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
                 out = new DataOutputStream(outFromServer);
-                
-                out.writeUTF("&"+userList); 
-                
+
+                out.writeUTF("&" + userList);
+
             } catch (Exception e) {
-                System.err.println("problem in sendUserList "+e);
+                System.err.println("problem in sendUserList " + e);
             }
         }
-        
+
     }
-    
+
     public static void broadcast(String username, String message) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -128,64 +125,75 @@ public class Server extends Thread{
                 out.writeUTF(username);
                 out.writeUTF(message);
             } catch (Exception e) {
-                System.err.println("problem in broadcast "+e);
+                System.err.println("problem in broadcast " + e);
             }
         }
-                
+
     }
-    
+
     public static void whisper(String usernameFrom, String usernameTo, String message) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
-        
+
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             if (pair.getKey().equals(usernameTo) || pair.getKey().equals(usernameFrom)) {
                 try {
                     outFromServer = pair.getValue().getClientSocket().getOutputStream();
                     out = new DataOutputStream(outFromServer);
-                    out.writeUTF(usernameFrom+" > "+usernameTo); 
+                    out.writeUTF(usernameFrom + " > " + usernameTo);
                     out.writeUTF(message);
                 } catch (Exception e) {
                     System.err.println("could not whisper : " + e);
                 }
             }
         }
-        
+
     }
-    
+
     public static void sendCallRequest(String usernameFrom, String usernameTo) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
-        
+
         System.out.println("LIST ::: " + listOfUsers);
-                try {
-                    outFromServer = listOfUsers.get(usernameTo).getClientSocket().getOutputStream();
-                    out = new DataOutputStream(outFromServer);
-                    out.writeUTF("!");
-                    
-                    String ip = listOfUsers.get(usernameFrom).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
-                    ip = ip.substring(0, ip.length()-5);
-                    
-                    out.writeUTF(ip);
-                    out.writeUTF(usernameFrom);
-                } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                try {
-                    outFromServer = listOfUsers.get(usernameFrom).getClientSocket().getOutputStream();
-                    out = new DataOutputStream(outFromServer);
-                    out.writeUTF("!");
-                    
-                    String ip = listOfUsers.get(usernameTo).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
-                    ip = ip.substring(0, ip.length()-5);
-                    
-                    out.writeUTF(ip);
-                    out.writeUTF(usernameTo);
-                } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        
+        try {
+            outFromServer = listOfUsers.get(usernameTo).getClientSocket().getOutputStream();
+            out = new DataOutputStream(outFromServer);
+            out.writeUTF("!");
+
+            String ip = listOfUsers.get(usernameFrom).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
+            ip = ip.substring(0, ip.length() - 5);
+
+            out.writeUTF(ip);
+            out.writeUTF(usernameFrom);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            outFromServer = listOfUsers.get(usernameFrom).getClientSocket().getOutputStream();
+            out = new DataOutputStream(outFromServer);
+            out.writeUTF("!");
+
+            String ip = listOfUsers.get(usernameTo).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
+            ip = ip.substring(0, ip.length() - 5);
+
+            out.writeUTF(ip);
+            out.writeUTF(usernameTo);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
+
+    public static void sendCallResponse(String response, String username) {
+        try {
+            outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
+            out = new DataOutputStream(outFromServer);
+            
+            out.writeUTF(response);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
