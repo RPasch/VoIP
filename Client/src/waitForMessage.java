@@ -34,20 +34,26 @@ public class waitForMessage extends Thread {
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
                 try {
+                    
                     answer = false;
-                    //            TODO : deal with reject
                     Client.out.writeUTF("no");
+                   
                 } catch (IOException ex) {
+                    System.err.println("HEEEEEEEEEEE" + ex);
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             } else if (response == JOptionPane.YES_OPTION) {
                 answer = true;
                 try {
+                    
                     answer = false;
-                    //            TODO : deal with reject
-                    Client.out.writeUTF("yes");
+                                        Client.out.writeUTF("yes");
+
+
                 } catch (IOException ex) {
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println("HEEEEEEEEEEE" + ex);
                 }
                 CallThread callThread = new CallThread(userIPtoCall);
                 callThread.start();
@@ -57,6 +63,9 @@ public class waitForMessage extends Thread {
             try {
                 Client.madeCall = false;
                 String response = Client.in.readUTF();
+                System.out.println(Client.client);
+
+                System.out.println("response is : " + response);
                 if(response.equals("yes")){
                     CallThread callThread = new CallThread(userIPtoCall);
                     callThread.start();

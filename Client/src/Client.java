@@ -35,7 +35,7 @@ public class Client {
     static DataOutputStream out;
     static InputStream inFromServer;
     static DataInputStream in;
-    static Socket client;
+    public static Socket client;
     public static ChatInterface chat;
     public static String IP_ad;
 
@@ -89,7 +89,12 @@ public class Client {
     public static String getServerName() {
         return serverName;
     }
+    public static void sendOneMessage( String response) throws IOException {
+        
+        out.writeUTF(response);
+        
 
+    }
     public static void sendMessage(String msg, String usr) throws IOException {
         out.writeUTF(usr);
         out.writeUTF(msg);
