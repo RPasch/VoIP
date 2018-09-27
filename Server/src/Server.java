@@ -157,6 +157,7 @@ public class Server extends Thread{
         OutputStream outFromServer = null;
         DataOutputStream out = null;
         
+        System.out.println("LIST ::: " + listOfUsers);
                 try {
                     outFromServer = listOfUsers.get(usernameTo).getClientSocket().getOutputStream();
                     out = new DataOutputStream(outFromServer);
@@ -170,6 +171,7 @@ public class Server extends Thread{
                 } catch (IOException ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 try {
                     outFromServer = listOfUsers.get(usernameFrom).getClientSocket().getOutputStream();
                     out = new DataOutputStream(outFromServer);

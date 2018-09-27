@@ -50,7 +50,9 @@ public class SocketHandler implements Runnable {
                     inFromClient.close();
                 } else if(toUser.equals("!")) {
                     //call code goes here
-                    
+                    String usernameTo = message;
+                    Server.sendCallRequest(username, usernameTo);
+                    System.out.println("GOT THE ! !!!!");
                 } else {
                     Server.whisper(username, toUser, message);
                 }
