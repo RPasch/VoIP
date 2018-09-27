@@ -25,6 +25,8 @@ public class CallThread extends Thread{
     public static void connectSockets(){
     
     
+        
+        Client.inCall = true;
     }
     
 }
