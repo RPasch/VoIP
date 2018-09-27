@@ -48,6 +48,9 @@ public class SocketHandler implements Runnable {
                     }
                     in.close();
                     inFromClient.close();
+                } else if(toUser.equals("!")) {
+                    //call code goes here
+                    
                 } else {
                     Server.whisper(username, toUser, message);
                 }

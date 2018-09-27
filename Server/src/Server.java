@@ -141,7 +141,7 @@ public class Server extends Thread{
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             if (pair.getKey().equals(usernameTo) || pair.getKey().equals(usernameFrom)) {
                 try {
-                    outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
+                    outFromServer = pair.getValue().getClientSocket().getOutputStream();
                     out = new DataOutputStream(outFromServer);
                     out.writeUTF(usernameFrom+" > "+usernameTo); 
                     out.writeUTF(message);
@@ -150,6 +150,39 @@ public class Server extends Thread{
                 }
             }
         }
+        
+    }
+    
+    public static void sendCallRequest(String usernameFrom, String usernameTo) {
+        OutputStream outFromServer = null;
+        DataOutputStream out = null;
+        
+                try {
+                    outFromServer = listOfUsers.get(usernameTo).getClientSocket().getOutputStream();
+                    out = new DataOutputStream(outFromServer);
+                    out.writeUTF("!");
+                    
+                    String ip = listOfUsers.get(usernameFrom).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
+                    ip = ip.substring(0, ip.length()-5);
+                    
+                    out.writeUTF(ip);
+                    out.writeUTF(usernameFrom);
+                } catch (IOException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    outFromServer = listOfUsers.get(usernameFrom).getClientSocket().getOutputStream();
+                    out = new DataOutputStream(outFromServer);
+                    out.writeUTF("!");
+                    
+                    String ip = listOfUsers.get(usernameTo).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
+                    ip = ip.substring(0, ip.length()-5);
+                    
+                    out.writeUTF(ip);
+                    out.writeUTF(usernameTo);
+                } catch (IOException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
         
     }
     
