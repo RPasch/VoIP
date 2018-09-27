@@ -95,8 +95,8 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="49" max="32767" attributes="0"/>
-              <Component id="callBTN" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <Component id="callBTN" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="reset_btn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -186,7 +186,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="callBTN">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Call"/>
+        <Property name="text" type="java.lang.String" value="Call" preCode="&#xa;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="callBTNActionPerformed"/>

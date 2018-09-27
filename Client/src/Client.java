@@ -24,7 +24,10 @@ import javax.swing.JOptionPane;
  * @author 18214304
  */
 public class Client {
-
+    
+    
+    public static boolean madeCall = false;
+    public static boolean inCall = false;
     public boolean valid_connection = true;
     private static int port = 8000;
     static String serverName = "146.232.49.154";
@@ -130,6 +133,17 @@ public class Client {
         }
 
         return valid;
+    }
+    public static void startCall( String msg_choice) {
+        try {
+            out.writeUTF("!");
+            out.writeUTF(msg_choice);
+            madeCall = true;
+
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

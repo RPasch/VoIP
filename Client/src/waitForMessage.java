@@ -8,6 +8,7 @@
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 //import static rw354_tut1_client.Client.receiveMsg;
 
@@ -24,6 +25,32 @@ public class waitForMessage extends Thread {
 
     }
 
+    public static void createCallThread(String userIPtoCall, String userNametoCall) {
+        
+        if(!Client.madeCall){
+            System.out.println("userIPtoCall  :  " + userIPtoCall + "userNametoCall  :  " + userNametoCall);
+            boolean answer = false;
+            JDialog.setDefaultLookAndFeelDecorated(true);
+            int response = JOptionPane.showConfirmDialog(null,userNametoCall +  " is calling.", "Answer?",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.NO_OPTION) {
+                answer = false;
+    //            TODO : deal with reject
+            } else if (response == JOptionPane.YES_OPTION) {
+                answer = true;
+                
+                CallThread callThread = new CallThread(userIPtoCall);
+                callThread.start();
+                
+            }
+        } else{
+            Client.madeCall = false;
+            CallThread callThread = new CallThread(userIPtoCall);
+            callThread.start();
+        }
+
+    }
+
     @Override
     public void run() {
 
@@ -31,12 +58,12 @@ public class waitForMessage extends Thread {
             waitForMsg(chat);
         } catch (IOException ex) {
             ChatInterface.connected = false;
-            JOptionPane.showMessageDialog(chat,"You are disconnected from the server.");
-            
+            JOptionPane.showMessageDialog(chat, "You are disconnected from the server.");
+
         }
 
     }
-    
+
     //An infinitw while loop the is looking for incoming messages
     //It checks the code of the message and based on that categorizes the follwoing message
     public static void waitForMsg(ChatInterface chat) throws IOException {
@@ -57,6 +84,10 @@ public class waitForMessage extends Thread {
                     String list_of = Client.receiveMsg().substring(1);
                     chat.removeUsers(disconnectedUsr, list_of);
                     break;
+                case '!':
+                    String userIPtoCall = Client.receiveMsg();
+                    String userNametoCall = Client.receiveMsg();
+                    createCallThread(userIPtoCall, userNametoCall);
                 default:
                     String who = anything;
                     String message = Client.receiveMsg();

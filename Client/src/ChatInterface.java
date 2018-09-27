@@ -196,8 +196,8 @@ public class ChatInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(callBTN)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(callBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reset_btn)
@@ -299,7 +299,8 @@ public class ChatInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_reset_btnActionPerformed
 
     private void callBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callBTNActionPerformed
-        // TODO add your handling code here:
+        String msg_choice = chat_choice_dropdown.getSelectedItem();
+        Client.startCall(msg_choice);
     }//GEN-LAST:event_callBTNActionPerformed
     //Prints the received message in the chat_txt
     public void printMsg(String msg, String FromWho) {
@@ -315,6 +316,7 @@ public class ChatInterface extends javax.swing.JFrame {
         }
 
     }
+    
     // Simply adds the new user to the dropdown list and to the list of connected clients
     public void addUsr(String usr) {
         users_txt.append(usr + "\n");
