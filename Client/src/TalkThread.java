@@ -8,13 +8,6 @@
  *
  * @author 18214304
  */
-public class getAudio extends Thread{
-    
-    public getAudio(){}
-    
-    @Override
-    public void run(){
-        
-        
-    }
+public class TalkThread {
+
 }

@@ -120,7 +120,6 @@ public class waitForMessage extends Thread {
         while (true) {
 
             String anything = Client.receiveMsg();
-            System.out.println(anything + "     ++++++++++++++++++++++++++++++++++++++++++++++++++");
 
             switch (anything.charAt(0)) {
                 case '&':
