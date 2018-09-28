@@ -13,30 +13,22 @@ import java.util.Date;
  */
 public class CallerThread extends Thread{
     private String userIPtoCall;
-    private boolean isCaller;
-    public CallerThread(String userIPtoCall , boolean isCaller){
+    private boolean answered;
+    public CallerThread(String userIPtoCall){
         this.userIPtoCall = userIPtoCall;
-        this.isCaller = isCaller;
     }
     
     @Override
     public void run(){
         System.out.println("IN CALL THREAD");
-        connectSockets(isCaller);
+        connectSockets(answered);
        
         
     
     }
     
     public static void connectSockets(boolean isCaller){
-        if(isCaller){
-            
-               
-           } else if(!isCaller){
-
-
-           }
-    
+       
         
         Client.inCall = true;
     }

@@ -26,24 +26,26 @@ public class waitForMessage extends Thread {
     }
 
     public static void createCallThread(String userIPtoCall, String userNametoCall) {
-        boolean isCaller = false;
+        boolean answered = false;
         if(!Client.madeCall){
             boolean answer = false;
             JDialog.setDefaultLookAndFeelDecorated(true);
             int response = JOptionPane.showConfirmDialog(null,userNametoCall +  " is calling.", "Answer?",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
-                
+                answered = false;
+                ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
+                recvThread.start();
                 
             } else if (response == JOptionPane.YES_OPTION) {
-                CallerThread callThread = new CallerThread(userIPtoCall , isCaller);
-                callThread.start();
+                answered = true;
+                ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
+                recvThread.start();
                 
             }
         } else{
                 Client.madeCall = false;
-                isCaller = true;
-                CallerThread callThread = new CallerThread(userIPtoCall, isCaller);
+                CallerThread callThread = new CallerThread(userIPtoCall);
                 callThread.start();
         }
 
