@@ -29,6 +29,8 @@ public class Client {
     public static boolean madeCall = false;
     public static boolean inCall = false;
 
+    
+
    
 
     
@@ -52,6 +54,11 @@ public class Client {
         String who;
         chat = new ChatInterface();
         chat.show();
+    }
+    public static void sendAudio() {
+        System.out.println("Sending.....not yet");
+
+    
     }
      public static void stopCall() {
         System.out.println("Stopping.....not yet");
