@@ -28,6 +28,7 @@ import javax.swing.JTextField;
  */
 public class ChatInterface extends javax.swing.JFrame {
     public static boolean connected = false;
+    public static recordingFrame recordingFrame;
     String username;
     String msg;
     String serverName = Client.getServerName();
@@ -50,6 +51,8 @@ public class ChatInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         Chat_txt = new java.awt.TextArea();
         users_txt = new java.awt.TextArea();
         send_btn = new javax.swing.JButton();
@@ -63,6 +66,10 @@ public class ChatInterface extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         callBTN = new javax.swing.JButton();
         RecordBTN = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -137,6 +144,11 @@ public class ChatInterface extends javax.swing.JFrame {
         });
 
         RecordBTN.setText("Record");
+        RecordBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RecordBTNActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,7 +159,7 @@ public class ChatInterface extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(reset_btn))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -164,7 +176,9 @@ public class ChatInterface extends javax.swing.JFrame {
                                 .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(RecordBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(RecordBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(280, 280, 280)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(callBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,7 +210,7 @@ public class ChatInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(msg_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(chat_choice_dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(callBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -303,6 +317,13 @@ public class ChatInterface extends javax.swing.JFrame {
         Client.startCall(msg_choice);
         System.out.println("msg_choice " + msg_choice);
     }//GEN-LAST:event_callBTNActionPerformed
+
+    private void RecordBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecordBTNActionPerformed
+        // TODO add your handling code here:
+        Client.record();
+        recordingFrame = new recordingFrame();
+        recordingFrame.show();
+    }//GEN-LAST:event_RecordBTNActionPerformed
     //Prints the received message in the chat_txt
     public void printMsg(String msg, String FromWho) {
         Chat_txt.append(FromWho + ":" + msg + "\n");
@@ -426,11 +447,13 @@ public class ChatInterface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.TextArea Chat_txt;
     private javax.swing.JTextField IP_addr;
-    private javax.swing.JButton RecordBTN;
+    public javax.swing.JButton RecordBTN;
     private javax.swing.JButton callBTN;
     private java.awt.Choice chat_choice_dropdown;
     private javax.swing.JButton connect_btn;
     private javax.swing.JButton disconnect_btn;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField msg_txt;
     private javax.swing.JButton reset_btn;

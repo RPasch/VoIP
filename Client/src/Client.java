@@ -28,6 +28,8 @@ public class Client {
     
     public static boolean madeCall = false;
     public static boolean inCall = false;
+
+    
     public boolean valid_connection = true;
     private static int port = 8000;
     static String serverName = "146.232.49.154";
@@ -50,6 +52,15 @@ public class Client {
         chat.show();
     }
     
+    public static void record() {
+        System.out.println("Recording.....not yet");
+    }
+    public static void stopRecording() {
+        System.out.println("Stopped Recording.....not yet");
+    }
+    public static void playback() {
+        System.out.println("Playingback.....not yet");
+    }
     //Connects the client sockect to the server socket. 
     //Receivees the list of currently connected users and sends username.
     // It calls method waitForMessage which starts a thread and conctantly looks for incoming messages
