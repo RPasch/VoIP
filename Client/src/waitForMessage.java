@@ -35,21 +35,24 @@ public class waitForMessage extends Thread {
             if (response == JOptionPane.NO_OPTION) {
                 answered = false;
                 try {
+                    Thread.sleep(1000);
                     Client.sendMessage("-", userIPtoCall);
                     //ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
                     //recvThread.start();
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             } else if (response == JOptionPane.YES_OPTION) {
                 try {
+                    Thread.sleep(1000);
+                    
                     Client.sendMessage("+", userIPtoCall);
                     
                     answered = true;
                     ReceiverThread recvThread = new ReceiverThread(userIPtoCall);
                     recvThread.start();
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
@@ -57,7 +60,9 @@ public class waitForMessage extends Thread {
         } else{
             try {
                 Client.madeCall = false;
-                String response = Client.in.readUTF();
+                String response = Client.receiveMsg();
+                
+                System.out.println("RESPONSE ::: " + response);
                 
                 if (response.equals("+")) {
                     CallerThread callThread = new CallerThread(userIPtoCall);

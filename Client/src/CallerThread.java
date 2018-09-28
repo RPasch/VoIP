@@ -18,6 +18,7 @@ public class CallerThread extends Thread{
     public static DataInputStream in;
     
     public CallerThread(String userIPtoCall){
+        System.out.println("IN CALLER CONSTRUCTOR");
         this.userIPtoCall = userIPtoCall;
     }
     

@@ -52,9 +52,7 @@ public class SocketHandler implements Runnable {
                     //call code goes here
                     String usernameTo = message;
                     Server.sendCallRequest(username, usernameTo);
-                    
-                    System.out.println("USERNAMETO ::: "+Server.listOfUsers.get(usernameTo).clientSocket);
-                    
+                                        
 //                    InputStream inFromReceiver = Server.listOfUsers.get(usernameTo).getClientSocket().getInputStream();
 //                    DataInputStream in2 = new DataInputStream(inFromReceiver);
 //                    
