@@ -1,3 +1,6 @@
+
+import java.util.Date;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,26 +11,36 @@
  *
  * @author 18214304
  */
-public class CallThread extends Thread{
+public class CallerThread extends Thread{
     private String userIPtoCall;
-    
-    public CallThread(String userIPtoCall){
+    private boolean isCaller;
+    public CallerThread(String userIPtoCall , boolean isCaller){
         this.userIPtoCall = userIPtoCall;
+        this.isCaller = isCaller;
     }
     
     @Override
     public void run(){
         System.out.println("IN CALL THREAD");
-        connectSockets();
+        connectSockets(isCaller);
+       
         
     
     }
     
-    public static void connectSockets(){
-    
+    public static void connectSockets(boolean isCaller){
+        if(isCaller){
+            
+               
+           } else if(!isCaller){
+
+
+           }
     
         
         Client.inCall = true;
     }
+    
+   
     
 }

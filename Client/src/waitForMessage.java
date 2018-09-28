@@ -26,55 +26,25 @@ public class waitForMessage extends Thread {
     }
 
     public static void createCallThread(String userIPtoCall, String userNametoCall) {
-        
+        boolean isCaller = false;
         if(!Client.madeCall){
             boolean answer = false;
             JDialog.setDefaultLookAndFeelDecorated(true);
             int response = JOptionPane.showConfirmDialog(null,userNametoCall +  " is calling.", "Answer?",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
-                try {
-                    
-                    answer = false;
-                    Client.out.writeUTF("no");
-                   
-                } catch (IOException ex) {
-                    System.err.println("HEEEEEEEEEEE" + ex);
-                    Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
                 
             } else if (response == JOptionPane.YES_OPTION) {
-                answer = true;
-                try {
-                    
-                    answer = false;
-                                        Client.out.writeUTF("yes");
-
-
-                } catch (IOException ex) {
-                    Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
-                    System.err.println("HEEEEEEEEEEE" + ex);
-                }
-                CallThread callThread = new CallThread(userIPtoCall);
+                CallerThread callThread = new CallerThread(userIPtoCall , isCaller);
                 callThread.start();
                 
             }
         } else{
-            try {
                 Client.madeCall = false;
-                String response = Client.in.readUTF();
-                System.out.println(Client.client);
-
-                System.out.println("response is : " + response);
-                if(response.equals("yes")){
-                    CallThread callThread = new CallThread(userIPtoCall);
-                    callThread.start();
-                } else {
-                    JOptionPane.showMessageDialog(null, userNametoCall + " declined your call.");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                isCaller = true;
+                CallerThread callThread = new CallerThread(userIPtoCall, isCaller);
+                callThread.start();
         }
 
     }
