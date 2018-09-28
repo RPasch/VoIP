@@ -91,7 +91,7 @@ public class ChatInterface extends javax.swing.JFrame {
 
         chat_choice_dropdown.add("All");
 
-        username_txt.setText("Enter Username");
+        username_txt.setText("RabzP");
         username_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_txtActionPerformed(evt);
@@ -119,7 +119,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        IP_addr.setText("Enter IP Address");
+        IP_addr.setText("146.232.49.63");
         IP_addr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IP_addrActionPerformed(evt);

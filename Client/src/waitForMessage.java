@@ -37,7 +37,7 @@ public class waitForMessage extends Thread {
             }
 
         } else if (response == JOptionPane.YES_OPTION) {
-            RecordAndPlay RaP = new RecordAndPlay();
+            RecordAndPlay RaP = new RecordAndPlay(1);
             RaP.playAudio(audioData);
         }
 
@@ -104,6 +104,7 @@ public class waitForMessage extends Thread {
         } catch (IOException ex) {
             ChatInterface.connected = false;
             JOptionPane.showMessageDialog(chat, "You are disconnected from the server.");
+            System.err.println(ex);
 
         }
 
@@ -118,6 +119,8 @@ public class waitForMessage extends Thread {
         while (true) {
 
             String anything = Client.receiveMsg();
+            System.out.println(anything + "     ++++++++++++++++++++++++++++++++++++++++++++++++++");
+
             switch (anything.charAt(0)) {
                 case '&':
                     String connectedUsr = anything.substring(1, anything.length());
@@ -134,12 +137,22 @@ public class waitForMessage extends Thread {
                     String userNametoCall = Client.receiveMsg();
                     System.out.println("RECEIVED !!!!!!!!!!");
                     createCallThread(userIPtoCall, userNametoCall);
+                    break;
                 case '*':
+                    System.out.println("in asteriks");
                     byte[] audioData = Client.receiveAudioData();
                     String userFrom = Client.receiveMsg();
+//                    String weird = Client.receiveMsg();
+//                    String weird1 = Client.receiveMsg();
+//                    String weird2 = Client.receiveMsg();
+//                    System.out.println(weird + " weird");
+//                    System.out.println(weird1 + " weird1");
+//                    System.out.println(weird2 + " weird2");
                     System.out.println("RECEIVED !!!!!!!!!!");
                     receiveVoiceNote(audioData, userFrom);
+                    break;
                 default:
+                    System.out.println("in defualt");
                     String who = anything;
                     String message = Client.receiveMsg();
                     chat.printMsg(message, who);

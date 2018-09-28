@@ -149,7 +149,9 @@ public class Client {
     public static String receiveMsg() throws IOException {
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
-        String inputFromServer = in.readUTF();
+        String inputFromServer = "";
+        inputFromServer = in.readUTF();
+        System.out.println("in receiveMsg ...received  : |" + inputFromServer + "|");
         return inputFromServer;
     }
 

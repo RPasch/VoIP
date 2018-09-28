@@ -42,6 +42,10 @@ public class RecordAndPlay extends JFrame {
 //        new RecordAndPlay();
 //
 //    }
+    public RecordAndPlay(int n) {
+
+    }
+
     public RecordAndPlay() {//constructor
         final JButton captureBtn = new JButton("Capture");
         final JButton stopBtn = new JButton("Stop");
