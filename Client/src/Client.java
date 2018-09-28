@@ -139,6 +139,7 @@ public class Client {
 
         return valid;
     }
+    
     public static void startCall( String msg_choice) {
         try {
             out.writeUTF("!");
