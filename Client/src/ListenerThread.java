@@ -11,18 +11,20 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
-
 public class ListenerThread extends Thread {
 
     private DatagramSocket socket;
     private byte[] tempBuffer;
-    
+
     private int BUFFER_SIZE = 4000;
-    public boolean keepPlay;
+    public static boolean keepPlay;
+
+    public static void setKeepPlay(boolean x) {
+        keepPlay = x;
+    }
     private AudioInputStream audioInputStream;
     private SourceDataLine sourceDataLine;
 
-    
     public ListenerThread(DatagramSocket socket) {
         this.socket = socket;
         this.tempBuffer = new byte[BUFFER_SIZE];
@@ -31,16 +33,16 @@ public class ListenerThread extends Thread {
     @Override
     public void run() {
         try {
-            
+
             DatagramPacket inPacket;
             keepPlay = true;
-            
-            while(keepPlay) {
+
+            while (keepPlay) {
                 inPacket = new DatagramPacket(tempBuffer, tempBuffer.length);
                 this.socket.receive(inPacket);
-                
+
                 byte[] audioData = inPacket.getData();
-                
+
                 InputStream byteArrayInputStream = new ByteArrayInputStream(audioData);
                 AudioFormat audioFormat = getAudioFormat();
                 audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat, audioData.length / audioFormat.getFrameSize());
@@ -48,9 +50,9 @@ public class ListenerThread extends Thread {
                 sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
                 sourceDataLine.open(audioFormat);
                 sourceDataLine.start();
-                
+
                 int cnt;
-                
+
                 while ((cnt = audioInputStream.read(tempBuffer, 0, tempBuffer.length)) != -1) {
                     if (cnt > 0) {
                         sourceDataLine.write(tempBuffer, 0, cnt);
@@ -58,14 +60,14 @@ public class ListenerThread extends Thread {
                 }
                 sourceDataLine.drain();
                 sourceDataLine.close();
-                
+
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         //8000,11025,16000,22050,44100
@@ -79,5 +81,5 @@ public class ListenerThread extends Thread {
         //true,false
         return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
     }
-    
+
 }
