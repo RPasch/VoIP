@@ -41,6 +41,7 @@ public class Client {
     public static String IP_ad;
     public static byte[] audioData;
     public static int lengthOfaudioData;
+    public static String myIP;
 
     /**
      * @param args the command line arguments
@@ -72,6 +73,9 @@ public class Client {
         try {
             IP_ad = chat.IP;
             client = new Socket(IP_ad, port);
+            
+            myIP = client.getRemoteSocketAddress().toString().replace("/", "");
+            myIP = myIP.substring(0, myIP.length() - 5);
 
             validIP = client.isConnected();
             if (!validIP) {

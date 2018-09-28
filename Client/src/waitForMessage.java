@@ -69,8 +69,8 @@ public class waitForMessage extends Thread {
                     System.out.println("I JUST SENT TO THIS IP ::: " + userIPtoCall);
 
                     answered = true;
-                    ReceiverThread recvThread = new ReceiverThread(userIPtoCall);
-                    recvThread.start();
+                    CallerThread callThread = new CallerThread(Client.myIP, userIPtoCall);
+                    callThread.start();
                 } catch (Exception ex) {
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -84,7 +84,7 @@ public class waitForMessage extends Thread {
                 System.out.println("RESPONSE ::: " + response);
 
                 if (response.equals("+")) {
-                    CallerThread callThread = new CallerThread(userIPtoCall);
+                    CallerThread callThread = new CallerThread(Client.myIP, userIPtoCall);
                     callThread.start();
                 } else {
                     JOptionPane.showMessageDialog(null, "she just ain't interested bro");

@@ -20,14 +20,8 @@ import java.util.logging.Logger;
  */
 public class ReceiverThread extends Thread{
     private static String userIPtoCall;
-    private boolean answerCall;
     
-    static OutputStream outToCaller;
-    static DataOutputStream out;
-    static InputStream inFromCaller;
-    static DataInputStream in;
-    static Socket clientCaller;
-    public static inCallGui incall;
+    public static inCallGui incallgui;
     
     public ReceiverThread(String userIPtoCall){
         this.userIPtoCall = userIPtoCall;
@@ -36,22 +30,13 @@ public class ReceiverThread extends Thread{
     @Override
     public void run(){
         System.out.println("IN RECEIVER THREAD");
-        connectSockets(answerCall);
-        incall = new inCallGui();
-        incall.show();
+        connectSockets();
+        incallgui = new inCallGui();
+        incallgui.show();
     }
     
-    public static void connectSockets(boolean answerCall){
+    public static void connectSockets(){
         
-        try {
-            
-        } catch (Exception ex) {
-            Logger.getLogger(ReceiverThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Client.inCall = true;
-
-    
     }
     
 }
