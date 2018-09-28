@@ -112,6 +112,7 @@ public class Client {
             System.out.println("in SendVoiceNote " + lengthOfaudioData);
             out.writeInt(audioData.length);
             out.write(audioData, 0, audioData.length);
+            System.out.println("SENDER last two entries : " + audioData[lengthOfaudioData - 2] + "  " + audioData[lengthOfaudioData - 1]);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -164,6 +165,8 @@ public class Client {
         int lengthOfAudio = in.readInt();
         audioDataReceved = new byte[lengthOfAudio];
         in.read(audioDataReceved, 0, lengthOfAudio);
+        System.out.println("RECEIVER last two entries : " + audioData[lengthOfaudioData - 2] + "  " + audioData[lengthOfaudioData - 1]);
+
         System.out.println(lengthOfAudio + " contents of voicenote " + " " + audioDataReceved[0]);
 
         return audioDataReceved;
