@@ -24,16 +24,11 @@ import javax.swing.JOptionPane;
  * @author 18214304
  */
 public class Client {
-    
-    
+
     public static boolean madeCall = false;
     public static boolean inCall = false;
+    public static RecordAndPlay RaP;
 
-    
-
-   
-
-    
     public boolean valid_connection = true;
     private static int port = 8000;
     static String serverName = "146.232.49.154";
@@ -44,6 +39,7 @@ public class Client {
     public static Socket client;
     public static ChatInterface chat;
     public static String IP_ad;
+    public static byte[] audioData;
 
     /**
      * @param args the command line arguments
@@ -55,23 +51,21 @@ public class Client {
         chat = new ChatInterface();
         chat.show();
     }
-    public static void sendAudio() {
-        System.out.println("Sending.....not yet");
 
-    
+    public static void sendVoiceNote() {
+
     }
-     public static void stopCall() {
+
+    public static void stopCall() {
         System.out.println("Stopping.....not yet");
     }
+
     public static void record() {
+        RaP = new RecordAndPlay();
+
         System.out.println("Recording.....not yet");
     }
-    public static void stopRecording() {
-        System.out.println("Stopped Recording.....not yet");
-    }
-    public static void playback() {
-        System.out.println("Playingback.....not yet");
-    }
+
     //Connects the client sockect to the server socket. 
     //Receivees the list of currently connected users and sends username.
     // It calls method waitForMessage which starts a thread and conctantly looks for incoming messages
@@ -97,7 +91,7 @@ public class Client {
             waitForMessage waitFor = new waitForMessage(chat);
 
             waitFor.start();
-            
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(chat, "Could not connect to server : " + e);
         }
@@ -111,29 +105,29 @@ public class Client {
     public static String getServerName() {
         return serverName;
     }
-    public static void sendOneMessage( String response) throws IOException {
-        
+
+    public static void sendOneMessage(String response) throws IOException {
+
         out.writeUTF(response);
-        
 
     }
-    
+
     public static void sendMessage(String msg, String usr) throws IOException {
         out.writeUTF(usr);
         out.writeUTF(msg);
     }
-    
+
     // Disconnects the user : closes all dataStreams as well as the socket. It also notifies the Server beforehand
     public static void disconnect(String usr) {
         try {
-            if(ChatInterface.connected){
-            out.writeUTF("@");
-            out.writeUTF(usr);
-            out.close();
-            outToServer.close();
-            in.close();
-            inFromServer.close();
-            client.close();
+            if (ChatInterface.connected) {
+                out.writeUTF("@");
+                out.writeUTF(usr);
+                out.close();
+                outToServer.close();
+                in.close();
+                inFromServer.close();
+                client.close();
             }
             chat.dispose();
         } catch (IOException ex) {
@@ -141,14 +135,14 @@ public class Client {
         }
 
     }
-    
+
     public static String receiveMsg() throws IOException {
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
         String inputFromServer = in.readUTF();
         return inputFromServer;
     }
-    
+
     //Runs through list of usernames and check if the current username is already take , if so it assigns a new username
     public static boolean checkUsername(String list, String usrnm) {
         boolean valid = true;
@@ -161,8 +155,8 @@ public class Client {
 
         return valid;
     }
-    
-    public static void startCall( String msg_choice) {
+
+    public static void startCall(String msg_choice) {
         try {
             out.writeUTF("!");
             out.writeUTF(msg_choice);

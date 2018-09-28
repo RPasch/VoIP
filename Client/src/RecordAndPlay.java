@@ -1,4 +1,4 @@
-/*File AudioCapture01.java
+/*File RecordAndPlay.java
 This program demonstrates the capture
 and subsequent playback of audio data.
 
@@ -28,7 +28,7 @@ import java.awt.event.*;
 import java.io.*;
 import javax.sound.sampled.*;
 
-public class AudioCapture01 extends JFrame {
+public class RecordAndPlay extends JFrame {
 
     boolean stopCapture = false;
     ByteArrayOutputStream byteArrayOutputStream;
@@ -37,21 +37,21 @@ public class AudioCapture01 extends JFrame {
     AudioInputStream audioInputStream;
     SourceDataLine sourceDataLine;
 
-    public static void main(String args[]) {
-
-        new AudioCapture01();
-
-    }
-
-    public AudioCapture01() {//constructor
+//    public static void main(String args[]) {
+//
+//        new RecordAndPlay();
+//
+//    }
+    public RecordAndPlay() {//constructor
         final JButton captureBtn = new JButton("Capture");
         final JButton stopBtn = new JButton("Stop");
         final JButton playBtn = new JButton("Playback");
+        final JButton sendBtn = new JButton("Send");
 
         captureBtn.setEnabled(true);
         stopBtn.setEnabled(false);
         playBtn.setEnabled(false);
-
+        sendBtn.setEnabled(false);
         //Register anonymous listeners
         captureBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -67,12 +67,27 @@ public class AudioCapture01 extends JFrame {
         );//end addActionListener()
         getContentPane().add(captureBtn);
 
+        sendBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                //Capture input data from the
+                // microphone until the Stop
+                // button is clicked.
+                Client.sendVoiceNote();
+                dispose();
+            }//end actionPerformed
+        }//end ActionListener
+        );//end addActionListener()
+        getContentPane().add(sendBtn);
+
         stopBtn.addActionListener(new ActionListener() {
             public void actionPerformed(
                     ActionEvent e) {
                 captureBtn.setEnabled(true);
                 stopBtn.setEnabled(false);
                 playBtn.setEnabled(true);
+                sendBtn.setEnabled(true);
+
                 //Terminate the capturing of
                 // input data from the
                 // microphone.
@@ -105,7 +120,7 @@ public class AudioCapture01 extends JFrame {
     //This method captures audio input
     // from a microphone and saves it in
     // a ByteArrayOutputStream object.
-    private void captureAudio() {
+    public void captureAudio() {
         try {
             System.out.println("in Capture code");
 
@@ -127,12 +142,13 @@ public class AudioCapture01 extends JFrame {
             System.out.println(e);
             System.exit(0);
         }//end catch
+
     }//end captureAudio method
 
     //This method plays back the audio
     // data that has been saved in the
     // ByteArrayOutputStream
-    private void playAudio() {
+    public void playAudio() {
         try {
             System.out.println("in PlayAudio");
 
@@ -172,7 +188,7 @@ public class AudioCapture01 extends JFrame {
     // allowable parameter values, which
     // are shown in comments following
     // the declarations.
-    private AudioFormat getAudioFormat() {
+    public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         //8000,11025,16000,22050,44100
         int sampleSizeInBits = 16;
@@ -209,8 +225,7 @@ public class AudioCapture01 extends JFrame {
                     if (cnt > 0) {
                         //Save data in output stream
                         // object.
-                        byteArrayOutputStream.write(
-                                tempBuffer, 0, cnt);
+                        byteArrayOutputStream.write(tempBuffer, 0, cnt);
                     }//end if
                 }//end while
                 byteArrayOutputStream.close();
@@ -218,6 +233,7 @@ public class AudioCapture01 extends JFrame {
                 System.out.println(e);
                 System.exit(0);
             }//end catch
+            Client.audioData = byteArrayOutputStream.toByteArray();
         }//end run
     }//end inner class CaptureThread
 //===================================//
@@ -242,8 +258,7 @@ public class AudioCapture01 extends JFrame {
                         // buffer of the data line
                         // where it will be delivered
                         // to the speaker.
-                        sourceDataLine.write(
-                                tempBuffer, 0, cnt);
+                        sourceDataLine.write(tempBuffer, 0, cnt);
                     }//end if
                 }//end while
                 //Block and wait for internal
@@ -259,4 +274,4 @@ public class AudioCapture01 extends JFrame {
     }//end inner class PlayThread
 //===================================//
 
-}//end outer class AudioCapture01.java
+}//end outer class RecordAndPlay.java

@@ -27,8 +27,8 @@ import javax.swing.JTextField;
  * @author rabbp
  */
 public class ChatInterface extends javax.swing.JFrame {
+
     public static boolean connected = false;
-    public static recordingFrame recordingFrame;
     String username;
     String msg;
     String serverName = Client.getServerName();
@@ -248,8 +248,8 @@ public class ChatInterface extends javax.swing.JFrame {
             username_txtActionPerformed(evt);
             IP_addrActionPerformed(evt);
             if (username.equals("All")) {
-                username = "All"+(int)(Math.random()*100);
-                JOptionPane.showMessageDialog(rootPane,"Cannot choose 'ALL' as your username. Your new Username is : " + username);
+                username = "All" + (int) (Math.random() * 100);
+                JOptionPane.showMessageDialog(rootPane, "Cannot choose 'ALL' as your username. Your new Username is : " + username);
             }
             Client.connect(serverName, username);
             reset_btn.setEnabled(true);
@@ -262,7 +262,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private void msg_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msg_txtActionPerformed
         // TODO add your handling code here:
         msg = msg_txt.getText();
-        
+
     }//GEN-LAST:event_msg_txtActionPerformed
 
     private void disconnect_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnect_btnActionPerformed
@@ -281,7 +281,7 @@ public class ChatInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         Client.disconnect(username);
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     //Closes all DataStreams and closes socket
@@ -321,9 +321,10 @@ public class ChatInterface extends javax.swing.JFrame {
     private void RecordBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RecordBTNActionPerformed
         // TODO add your handling code here:
         Client.record();
-        recordingFrame = new recordingFrame();
-        recordingFrame.show();
+//        recordingFrame = new recordingFrame();
+//        recordingFrame.show();
     }//GEN-LAST:event_RecordBTNActionPerformed
+
     //Prints the received message in the chat_txt
     public void printMsg(String msg, String FromWho) {
         Chat_txt.append(FromWho + ":" + msg + "\n");
@@ -338,13 +339,14 @@ public class ChatInterface extends javax.swing.JFrame {
         }
 
     }
-    
+
     // Simply adds the new user to the dropdown list and to the list of connected clients
     public void addUsr(String usr) {
         users_txt.append(usr + "\n");
         chat_choice_dropdown.add(usr);
 
     }
+
     //Removes a disconnected user from the list of users and the dropodown list
     public void removeUsers(String user, String list_of_users) {
         List<String> tempList = Arrays.asList(list_of_users.split(","));
@@ -358,6 +360,7 @@ public class ChatInterface extends javax.swing.JFrame {
             addUsr(list.get(i));
         }
     }
+
     //This is called everytime a new user connects
     //It updates the user list and also the dropdown list
     //It updates the global list of users
@@ -384,6 +387,7 @@ public class ChatInterface extends javax.swing.JFrame {
             addUsr(list.get(i));
         }
     }
+
     //Checks if the IP entered is a valid IP address
     public static boolean checkIP(String ip) {
         boolean valid = false;
