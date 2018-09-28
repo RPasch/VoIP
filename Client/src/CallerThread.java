@@ -44,7 +44,8 @@ public class CallerThread extends Thread{
             int TALK_PORT = 7997;
             int LISTEN_PORT = 7997;
             
-            InetAddress theirInet = InetAddress.getByName(theirIP);
+            System.out.println("************* "+theirIP.substring(0, theirIP.length()-1));
+            InetAddress theirInet = InetAddress.getByName(theirIP.substring(0, theirIP.length()-1));
             
             receiveSocket = new DatagramSocket(LISTEN_PORT);
             sendSocket = new DatagramSocket(TALK_PORT);
