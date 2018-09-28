@@ -16,7 +16,8 @@ public class CallerThread extends Thread{
     private static int PORT_NUMBER = 7998;
     public static InputStream inStream;
     public static DataInputStream in;
-    
+    public static inCall incall;
+
     public CallerThread(String userIPtoCall){
         System.out.println("IN CALLER CONSTRUCTOR");
         this.userIPtoCall = userIPtoCall;
@@ -26,27 +27,15 @@ public class CallerThread extends Thread{
     public void run(){
         System.out.println("IN CALLER THREAD");
         connectSockets();
-       
+        incall = new inCall();
+        incall.show();
         
     
     }
     
     public static void connectSockets(){
         try {
-            System.out.println("SUCCESS BRUH");
-//            callerSocket = new ServerSocket(PORT_NUMBER);
-//            receiverSocket = callerSocket.accept();
-//            
-//            System.out.println("sockets made succesfully");
-//            
-//            inStream = receiverSocket.getInputStream();
-//            in = new DataInputStream(inStream);
-//            
-//            System.out.println("input streams made succesfully");
-//            
-//            answered = in.readBoolean();
-//            
-//            System.out.println("ANSWERED ??? " + answered);
+
             
             Client.inCall = true;
         } catch (Exception ex) {

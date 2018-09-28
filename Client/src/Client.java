@@ -29,6 +29,8 @@ public class Client {
     public static boolean madeCall = false;
     public static boolean inCall = false;
 
+   
+
     
     public boolean valid_connection = true;
     private static int port = 8000;
@@ -51,7 +53,9 @@ public class Client {
         chat = new ChatInterface();
         chat.show();
     }
-    
+     public static void stopCall() {
+        System.out.println("Stopping.....not yet");
+    }
     public static void record() {
         System.out.println("Recording.....not yet");
     }

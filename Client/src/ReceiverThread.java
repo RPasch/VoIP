@@ -27,6 +27,7 @@ public class ReceiverThread extends Thread{
     static InputStream inFromCaller;
     static DataInputStream in;
     static Socket clientCaller;
+    public static inCall incall;
     
     public ReceiverThread(String userIPtoCall){
         this.userIPtoCall = userIPtoCall;
@@ -36,20 +37,14 @@ public class ReceiverThread extends Thread{
     public void run(){
         System.out.println("IN RECEIVER THREAD");
         connectSockets(answerCall);
-    
+        incall = new inCall();
+        incall.show();
     }
     
     public static void connectSockets(boolean answerCall){
         
         try {
-            System.out.println("SUCCESS");
-            //Thread.sleep(1000);
-//            clientCaller = new Socket(userIPtoCall,7998);
-//            System.out.println("just created the socket");
-//            outToCaller = clientCaller.getOutputStream();
-//            out = new DataOutputStream(outToCaller);
-//            out.writeBoolean(answerCall);
-//            System.out.println("in ReceiverThread : just sent answerCall");
+            
         } catch (Exception ex) {
             Logger.getLogger(ReceiverThread.class.getName()).log(Level.SEVERE, null, ex);
         }
