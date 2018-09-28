@@ -100,7 +100,6 @@ public class Server extends Thread {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
-        System.out.println("INININININ 7");
         
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
@@ -120,7 +119,6 @@ public class Server extends Thread {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
-        System.out.println("INININININ 6");
         
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
@@ -139,10 +137,8 @@ public class Server extends Thread {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
-        System.out.println("INININININ 4");
         
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
-            System.out.println("INININININ 5");
             if (pair.getKey().equals(usernameTo) || pair.getKey().equals(usernameFrom)) {
                 try {
                     outFromServer = pair.getValue().getClientSocket().getOutputStream();
@@ -159,7 +155,6 @@ public class Server extends Thread {
     
 
     public static void sendCallRequest(String usernameFrom, String usernameTo) {
-        System.out.println("INININININ 3");
         
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -197,7 +192,6 @@ public class Server extends Thread {
 
     public static void sendCallResponse(String response, String username) {
         try {
-            System.out.println("INININININ 2");
             outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
             out = new DataOutputStream(outFromServer);
             
@@ -209,29 +203,41 @@ public class Server extends Thread {
     
     public static void sendVoiceNote(byte[] voicenote, String username) {
         try {
-            System.out.println("INININININ 1");
             
             outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
             out = new DataOutputStream(outFromServer);
             
             out.writeUTF("*");
             
-            System.out.println("usernaaame ::: "+username);
             out.writeUTF(username);
-            
-//            for (int i = 0; i < voicenote.length; i++) {
-//                System.out.print(" 1: " + voicenote[i]);
-//            }
-//            System.out.println("");
 
-            System.out.println("+_+_+_+_+_+_+_+_+_ "+voicenote[voicenote.length-2]+" "+voicenote[voicenote.length-1]);
 
             out.writeInt(voicenote.length);
             out.write(voicenote, 0, voicenote.length);
-            System.out.println("INININININ 1.2");
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void broadcastVN(String username, byte[] voicenote) {
+        OutputStream outFromServer = null;
+        DataOutputStream out = null;
+
+        for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
+            try {
+                outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
+                out = new DataOutputStream(outFromServer);
+                
+                out.writeUTF("*");
+                out.writeUTF(username);
+                out.writeInt(voicenote.length);
+                out.write(voicenote, 0, voicenote.length);
+                
+            } catch (Exception e) {
+                System.err.println("problem in broadcast " + e);
+            }
+        }
+
     }
 
 }

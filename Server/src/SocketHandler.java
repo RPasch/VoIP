@@ -39,7 +39,15 @@ public class SocketHandler implements Runnable {
                 System.out.println("----- message ::: "+message);
                 
                 if (toUser.equals("All")) {
-                    Server.broadcast(username, message);
+                    if (message.equals("*")) {
+                        int len = in.readInt();
+                        byte[] voicenote = new byte[len];
+                        in.readFully(voicenote, 0, len);
+                        
+                        Server.broadcastVN(username, voicenote);
+                    } else {
+                        Server.broadcast(username, message);
+                    }
                 } else if (toUser.equals("@")) {
                     
                     Server.listOfUsers.remove(message);
