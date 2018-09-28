@@ -54,6 +54,7 @@ public class Client {
     }
 
     public static void stopCall() {
+        inCall = false;
         System.out.println("Stopping.....not yet");
     }
 

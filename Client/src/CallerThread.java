@@ -16,7 +16,7 @@ public class CallerThread extends Thread{
     private static int PORT_NUMBER = 7998;
     public static InputStream inStream;
     public static DataInputStream in;
-    public static inCall incall;
+    public static inCallGui incallgui;
 
     public CallerThread(String userIPtoCall){
         System.out.println("IN CALLER CONSTRUCTOR");
@@ -27,8 +27,8 @@ public class CallerThread extends Thread{
     public void run(){
         System.out.println("IN CALLER THREAD");
         connectSockets();
-        incall = new inCall();
-        incall.show();
+        incallgui = new inCallGui();
+        incallgui.show();
         
     
     }

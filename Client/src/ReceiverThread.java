@@ -27,7 +27,7 @@ public class ReceiverThread extends Thread{
     static InputStream inFromCaller;
     static DataInputStream in;
     static Socket clientCaller;
-    public static inCall incall;
+    public static inCallGui incall;
     
     public ReceiverThread(String userIPtoCall){
         this.userIPtoCall = userIPtoCall;
@@ -37,7 +37,7 @@ public class ReceiverThread extends Thread{
     public void run(){
         System.out.println("IN RECEIVER THREAD");
         connectSockets(answerCall);
-        incall = new inCall();
+        incall = new inCallGui();
         incall.show();
     }
     
