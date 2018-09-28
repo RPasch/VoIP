@@ -60,9 +60,13 @@ public class SocketHandler implements Runnable {
 //                    System.out.println("RESPONSE ::: " + callResponse);
 //                    Server.sendCallResponse(callResponse, username);
                 } else {
-                    System.out.println("IN HERE BRUUUUUUU");
                     if (message.equals("+") || message.equals("-")){
                         Server.sendCallResponse(message, toUser);
+                    } else if (message.equals("*")) {
+                        int len = in.readInt();
+                        byte[] voicenote = new byte[len];
+                        in.read(voicenote, 0, len);
+                        Server.sendVoiceNote(voicenote, username);
                     } else {
                         Server.whisper(username, toUser, message);
                     }

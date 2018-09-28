@@ -196,5 +196,18 @@ public class Server extends Thread {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void sendVoiceNote(byte[] voicenote, String username) {
+        try {
+            outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
+            out = new DataOutputStream(outFromServer);
+            
+            out.writeUTF("*");
+            out.write(voicenote);
+            out.writeUTF(username);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
