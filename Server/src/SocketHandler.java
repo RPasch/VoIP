@@ -62,7 +62,7 @@ public class SocketHandler implements Runnable {
                     } else if (message.equals("*")) {
                         int len = in.readInt();
                         byte[] voicenote = new byte[len];
-                        in.read(voicenote, 0, len);
+                        in.readFully(voicenote, 0, len);
                         Server.sendVoiceNote(voicenote, toUser);
                     } else {
                         Server.whisper(username, toUser, message);

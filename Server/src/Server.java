@@ -219,10 +219,13 @@ public class Server extends Thread {
             System.out.println("usernaaame ::: "+username);
             out.writeUTF(username);
             
-            for (int i = 0; i < voicenote.length; i++) {
-                System.out.print(" 1: " + voicenote[i]);
-            }
-            System.out.println("");
+//            for (int i = 0; i < voicenote.length; i++) {
+//                System.out.print(" 1: " + voicenote[i]);
+//            }
+//            System.out.println("");
+
+            System.out.println("+_+_+_+_+_+_+_+_+_ "+voicenote[voicenote.length-2]+" "+voicenote[voicenote.length-1]);
+
             out.writeInt(voicenote.length);
             out.write(voicenote, 0, voicenote.length);
             System.out.println("INININININ 1.2");
