@@ -35,6 +35,9 @@ public class SocketHandler implements Runnable {
             try {
                 String toUser = in.readUTF();
                 String message = in.readUTF();
+                System.out.println("+++++ toUser ::: "+toUser);
+                System.out.println("----- message ::: "+message);
+                
                 if (toUser.equals("All")) {
                     Server.broadcast(username, message);
                 } else if (toUser.equals("@")) {
@@ -52,13 +55,7 @@ public class SocketHandler implements Runnable {
                     //call code goes here
                     String usernameTo = message;
                     Server.sendCallRequest(username, usernameTo);
-                                        
-//                    InputStream inFromReceiver = Server.listOfUsers.get(usernameTo).getClientSocket().getInputStream();
-//                    DataInputStream in2 = new DataInputStream(inFromReceiver);
-//                    
-//                    String callResponse = in2.readUTF();//Server.listOfUsers.get(usernameTo).in.readUTF();
-//                    System.out.println("RESPONSE ::: " + callResponse);
-//                    Server.sendCallResponse(callResponse, username);
+                    
                 } else {
                     if (message.equals("+") || message.equals("-")){
                         Server.sendCallResponse(message, toUser);
@@ -66,13 +63,13 @@ public class SocketHandler implements Runnable {
                         int len = in.readInt();
                         byte[] voicenote = new byte[len];
                         in.read(voicenote, 0, len);
-                        Server.sendVoiceNote(voicenote, username);
+                        Server.sendVoiceNote(voicenote, toUser);
                     } else {
                         Server.whisper(username, toUser, message);
                     }
                 }
             } catch (IOException ex) {
-                System.err.println(ex);
+                System.err.println("THIS EXCEPTION ::: "+ex);
                 //bc that user disconnected
                 try {
                     clientSocket.close();
