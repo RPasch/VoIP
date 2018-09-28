@@ -27,6 +27,7 @@ public class waitForMessage extends Thread {
 
     public static void receiveVoiceNote(byte[] audioData, String userFrom) {
         JDialog.setDefaultLookAndFeelDecorated(true);
+        System.out.println("Received a VN from " + userFrom);
         int response = JOptionPane.showConfirmDialog(null, "Play?", "Received a VN from " + userFrom,
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
@@ -140,27 +141,28 @@ public class waitForMessage extends Thread {
                     break;
                 case '*':
                     System.out.println("in asteriks");
-                    byte[] audioData = Client.receiveAudioData();
                     String userFrom = Client.receiveMsg();
-                    String weird = Client.receiveMsg();
-                    String weird1 = Client.receiveMsg();
-                    String weird2 = Client.receiveMsg();
-                    System.out.println(weird + " weird");
-                    System.out.println(weird1 + " weird1");
-                    System.out.println(weird2 + " weird2");
-                    System.out.println("RECEIVED !!!!!!!!!!");
-                    String weird11 = Client.receiveMsg();
-                    String weird12 = Client.receiveMsg();
-                    String weird22 = Client.receiveMsg();
-                    System.out.println(weird11 + " weird");
-                    System.out.println(weird12 + " weird1");
-                    System.out.println(weird22 + " weird2");
-                    String weird23 = Client.receiveMsg();
-                    String weird13 = Client.receiveMsg();
-                    String weird33 = Client.receiveMsg();
-                    System.out.println(weird23 + " weird");
-                    System.out.println(weird13 + " weird1");
-                    System.out.println(weird33 + " weird2");
+                    System.out.println(userFrom + "userFrom");
+                    byte[] audioData = Client.receiveAudioData();
+//                    String weird = Client.receiveMsg();
+//                    String weird1 = Client.receiveMsg();
+//                    String weird2 = Client.receiveMsg();
+//                    System.out.println(weird + " weird");
+//                    System.out.println(weird1 + " weird1");
+//                    System.out.println(weird2 + " weird2");
+//                    System.out.println("RECEIVED !!!!!!!!!!");
+//                    String weird11 = Client.receiveMsg();
+//                    String weird12 = Client.receiveMsg();
+//                    String weird22 = Client.receiveMsg();
+//                    System.out.println(weird11 + " weird");
+//                    System.out.println(weird12 + " weird1");
+//                    System.out.println(weird22 + " weird2");
+//                    String weird23 = Client.receiveMsg();
+//                    String weird13 = Client.receiveMsg();
+//                    String weird33 = Client.receiveMsg();
+//                    System.out.println(weird23 + " weird");
+//                    System.out.println(weird13 + " weird1");
+//                    System.out.println(weird33 + " weird2");
                     receiveVoiceNote(audioData, userFrom);
                     break;
                 default:

@@ -109,6 +109,7 @@ public class Client {
             out.writeUTF(userTo);
             out.writeUTF("*");
             lengthOfaudioData = audioData.length;
+            System.out.println("in SendVoiceNote " + lengthOfaudioData);
             out.writeInt(audioData.length);
             out.write(audioData, 0, audioData.length);
         } catch (IOException ex) {
@@ -149,19 +150,24 @@ public class Client {
     public static String receiveMsg() throws IOException {
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
-        String inputFromServer = "";
+        String inputFromServer = "h";
         inputFromServer = in.readUTF();
         System.out.println("in receiveMsg ...received  : |" + inputFromServer + "|");
         return inputFromServer;
     }
 
     public static byte[] receiveAudioData() throws IOException {
+        byte[] audioDataReceved;
+
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
+        int lengthOfAudio = in.readInt();
+        audioDataReceved = new byte[lengthOfAudio];
+        in.read(audioDataReceved, 0, lengthOfAudio);
+        System.out.println(lengthOfAudio + " contents of voicenote " + " " + audioDataReceved[0]);
 
-        byte[] audioDataReceved = new byte[lengthOfaudioData];
-        in.read(audioDataReceved, 0, lengthOfaudioData);
         return audioDataReceved;
+
     }
 
     //Runs through list of usernames and check if the current username is already take , if so it assigns a new username
