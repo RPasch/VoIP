@@ -164,7 +164,7 @@ public class Client {
         in = new DataInputStream(inFromServer);
         int lengthOfAudio = in.readInt();
         audioDataReceved = new byte[lengthOfAudio];
-        in.read(audioDataReceved, 0, lengthOfAudio);
+        in.readFully(audioDataReceved, 0, lengthOfAudio);
         System.out.println(lengthOfAudio + " contents of voicenote " + " " + audioDataReceved[0]);
         System.out.println("RECEIVER last two entries : " + audioDataReceved[lengthOfAudio - 2] + "  " + audioDataReceved[lengthOfAudio - 1]);
 
