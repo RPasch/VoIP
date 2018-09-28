@@ -60,7 +60,12 @@ public class SocketHandler implements Runnable {
 //                    System.out.println("RESPONSE ::: " + callResponse);
 //                    Server.sendCallResponse(callResponse, username);
                 } else {
-                    Server.whisper(username, toUser, message);
+                    System.out.println("IN HERE BRUUUUUUU");
+                    if (message.equals("+") || message.equals("-")){
+                        Server.sendCallResponse(message, toUser);
+                    } else {
+                        Server.whisper(username, toUser, message);
+                    }
                 }
             } catch (IOException ex) {
                 System.err.println(ex);

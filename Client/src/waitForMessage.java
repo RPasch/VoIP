@@ -36,7 +36,7 @@ public class waitForMessage extends Thread {
                 answered = false;
                 try {
                     Thread.sleep(1000);
-                    Client.sendMessage("-", userIPtoCall);
+                    Client.sendMessage("-", userNametoCall);
                     //ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
                     //recvThread.start();
                 } catch (Exception ex) {
@@ -47,7 +47,9 @@ public class waitForMessage extends Thread {
                 try {
                     Thread.sleep(1000);
                     
-                    Client.sendMessage("+", userIPtoCall);
+                    Client.sendMessage("+", userNametoCall);
+                    
+                    System.out.println("I JUST SENT TO THIS IP ::: " + userIPtoCall);
                     
                     answered = true;
                     ReceiverThread recvThread = new ReceiverThread(userIPtoCall);
