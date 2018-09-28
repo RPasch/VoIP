@@ -1,3 +1,13 @@
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,8 +19,14 @@
  * @author 18214304
  */
 public class ReceiverThread extends Thread{
-    private String userIPtoCall;
+    private static String userIPtoCall;
     private boolean answerCall;
+    
+    static OutputStream outToCaller;
+    static DataOutputStream out;
+    static InputStream inFromCaller;
+    static DataInputStream in;
+    static Socket clientCaller;
     
     public ReceiverThread(String userIPtoCall , boolean answerCall){
         this.userIPtoCall = userIPtoCall;
@@ -25,9 +41,22 @@ public class ReceiverThread extends Thread{
     }
     
     public static void connectSockets(boolean answerCall){
-    
         
+        try {
+            Thread.sleep(1000);
+            clientCaller = new Socket(userIPtoCall,7998);
+            System.out.println("just created the socket");
+            outToCaller = clientCaller.getOutputStream();
+            out = new DataOutputStream(outToCaller);
+            out.writeBoolean(answerCall);
+            System.out.println("in ReceiverThread : just sent answerCall");
+        } catch (Exception ex) {
+            Logger.getLogger(ReceiverThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         Client.inCall = true;
+
+    
     }
     
 }
