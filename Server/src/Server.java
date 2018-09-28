@@ -25,7 +25,8 @@ public class Server extends Thread {
     private static InputStream terminalIn = null;
     private static BufferedReader br = null;
     public static ConcurrentHashMap<String, SocketHandler> listOfUsers = new ConcurrentHashMap<>();
-
+    public static ServerGui gui;
+    
     public static void main(String[] args) {
         int portNumber = 8000;
         ServerSocket serverSocket = null;
@@ -38,6 +39,9 @@ public class Server extends Thread {
             System.exit(0);
         }
 
+        gui = new ServerGui();
+        gui.show();
+        
         SocketHandler sh = null;
         try {
             clientSocket = serverSocket.accept();
@@ -51,6 +55,8 @@ public class Server extends Thread {
 
             String username = in.readUTF();
             System.out.println("Welcome: " + username + " to the chat");
+            gui.updateActivity(username + " joined the chat");
+            gui.addUser(username);
 
             sh = new SocketHandler(username, clientSocket);
 

@@ -44,6 +44,8 @@ public class ClientConnecter extends Thread {
                 Server.listOfUsers.put(username, sh);
                 
                 System.out.println("Welcome: "+username+" to the chat");
+                Server.gui.updateActivity(username + " joined the chat");
+                Server.gui.addUser(username);
                 
                 String userList = Server.getListOfUsers();
                 Server.sendUserList(userList);                 

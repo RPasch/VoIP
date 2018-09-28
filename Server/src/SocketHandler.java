@@ -45,8 +45,11 @@ public class SocketHandler implements Runnable {
                         in.readFully(voicenote, 0, len);
                         
                         Server.broadcastVN(username, voicenote);
+                        
+                        Server.gui.updateActivity(username+" broadcasted a voice note");
                     } else {
                         Server.broadcast(username, message);
+                        Server.gui.updateActivity(username+" broadcasted a message");
                     }
                 } else if (toUser.equals("@")) {
                     
@@ -56,24 +59,35 @@ public class SocketHandler implements Runnable {
                         Server.sendUserList(Server.getListOfUsers());
                     } else {
                         System.out.println("No more users connected");
+                        Server.gui.updateActivity("No more users connected");
                     }
                     in.close();
                     inFromClient.close();
+                    
+                    Server.gui.removeUser();
+                    Server.gui.updateActivity(message+" disconnected");
+                    
                 } else if(toUser.equals("!")) {
                     //call code goes here
                     String usernameTo = message;
                     Server.sendCallRequest(username, usernameTo);
                     
+                    Server.gui.updateActivity(username + " is calling " + usernameTo);
                 } else {
                     if (message.equals("+") || message.equals("-")){
                         Server.sendCallResponse(message, toUser);
+                        if (message.equals("+")) Server.gui.updateActivity(username + " is chatting to " + toUser);
+                        if (message.equals("-")) Server.gui.updateActivity(toUser + " declined a call from " + username);
                     } else if (message.equals("*")) {
                         int len = in.readInt();
                         byte[] voicenote = new byte[len];
                         in.readFully(voicenote, 0, len);
                         Server.sendVoiceNote(voicenote, toUser);
+                        
+                        Server.gui.updateActivity(username+" sent a voice note to "+toUser);
                     } else {
                         Server.whisper(username, toUser, message);
+                        Server.gui.updateActivity(username + " whispered to " + toUser);
                     }
                 }
             } catch (IOException ex) {
