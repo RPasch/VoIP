@@ -34,19 +34,41 @@ public class waitForMessage extends Thread {
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
                 answered = false;
-                ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
-                recvThread.start();
+                try {
+                    Client.sendMessage("-", userIPtoCall);
+                    //ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
+                    //recvThread.start();
+                } catch (IOException ex) {
+                    Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             } else if (response == JOptionPane.YES_OPTION) {
-                answered = true;
-                ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
-                recvThread.start();
+                try {
+                    Client.sendMessage("+", userIPtoCall);
+                    
+                    answered = true;
+                    ReceiverThread recvThread = new ReceiverThread(userIPtoCall);
+                    recvThread.start();
+                } catch (IOException ex) {
+                    Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         } else{
+            try {
                 Client.madeCall = false;
-                CallerThread callThread = new CallerThread(userIPtoCall);
-                callThread.start();
+                String response = Client.in.readUTF();
+                
+                if (response.equals("+")) {
+                    CallerThread callThread = new CallerThread(userIPtoCall);
+                    callThread.start();
+                } else {
+                    JOptionPane.showMessageDialog(null, "she just ain't interested bro");
+                }
+                
+            } catch (IOException ex) {
+                Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

@@ -23,7 +23,7 @@ public class CallerThread extends Thread{
     
     @Override
     public void run(){
-        System.out.println("IN CALL THREAD");
+        System.out.println("IN CALLER THREAD");
         connectSockets();
        
         
@@ -32,22 +32,23 @@ public class CallerThread extends Thread{
     
     public static void connectSockets(){
         try {
-            callerSocket = new ServerSocket(PORT_NUMBER);
-            receiverSocket = callerSocket.accept();
-            
-            System.out.println("sockets made succesfully");
-            
-            inStream = receiverSocket.getInputStream();
-            in = new DataInputStream(inStream);
-            
-            System.out.println("input streams made succesfully");
-            
-            answered = in.readBoolean();
-            
-            System.out.println("ANSWERED ??? " + answered);
+            System.out.println("SUCCESS BRUH");
+//            callerSocket = new ServerSocket(PORT_NUMBER);
+//            receiverSocket = callerSocket.accept();
+//            
+//            System.out.println("sockets made succesfully");
+//            
+//            inStream = receiverSocket.getInputStream();
+//            in = new DataInputStream(inStream);
+//            
+//            System.out.println("input streams made succesfully");
+//            
+//            answered = in.readBoolean();
+//            
+//            System.out.println("ANSWERED ??? " + answered);
             
             Client.inCall = true;
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

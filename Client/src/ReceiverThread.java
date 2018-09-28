@@ -28,14 +28,13 @@ public class ReceiverThread extends Thread{
     static DataInputStream in;
     static Socket clientCaller;
     
-    public ReceiverThread(String userIPtoCall , boolean answerCall){
+    public ReceiverThread(String userIPtoCall){
         this.userIPtoCall = userIPtoCall;
-        this.answerCall = answerCall;
     }
     
     @Override
     public void run(){
-        System.out.println("IN CALL THREAD");
+        System.out.println("IN RECEIVER THREAD");
         connectSockets(answerCall);
     
     }
@@ -43,13 +42,14 @@ public class ReceiverThread extends Thread{
     public static void connectSockets(boolean answerCall){
         
         try {
-            Thread.sleep(1000);
-            clientCaller = new Socket(userIPtoCall,7998);
-            System.out.println("just created the socket");
-            outToCaller = clientCaller.getOutputStream();
-            out = new DataOutputStream(outToCaller);
-            out.writeBoolean(answerCall);
-            System.out.println("in ReceiverThread : just sent answerCall");
+            System.out.println("SUCCESS");
+            //Thread.sleep(1000);
+//            clientCaller = new Socket(userIPtoCall,7998);
+//            System.out.println("just created the socket");
+//            outToCaller = clientCaller.getOutputStream();
+//            out = new DataOutputStream(outToCaller);
+//            out.writeBoolean(answerCall);
+//            System.out.println("in ReceiverThread : just sent answerCall");
         } catch (Exception ex) {
             Logger.getLogger(ReceiverThread.class.getName()).log(Level.SEVERE, null, ex);
         }

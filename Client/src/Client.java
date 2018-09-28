@@ -95,10 +95,10 @@ public class Client {
         
 
     }
+    
     public static void sendMessage(String msg, String usr) throws IOException {
         out.writeUTF(usr);
         out.writeUTF(msg);
-
     }
     
     // Disconnects the user : closes all dataStreams as well as the socket. It also notifies the Server beforehand
