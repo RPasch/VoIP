@@ -10,29 +10,21 @@
  */
 public class ReceiverThread extends Thread{
     private String userIPtoCall;
-    private boolean isCaller;
-    public ReceiverThread(String userIPtoCall , boolean isCaller){
+    private boolean answerCall;
+    
+    public ReceiverThread(String userIPtoCall , boolean answerCall){
         this.userIPtoCall = userIPtoCall;
-        this.isCaller = isCaller;
+        this.answerCall = answerCall;
     }
     
     @Override
     public void run(){
         System.out.println("IN CALL THREAD");
-        connectSockets(isCaller);
-       
-        
+        connectSockets(answerCall);
     
     }
     
-    public static void connectSockets(boolean isCaller){
-        if(isCaller){
-            
-               
-           } else if(!isCaller){
-
-
-           }
+    public static void connectSockets(boolean answerCall){
     
         
         Client.inCall = true;
