@@ -103,7 +103,7 @@ public class RecordAndPlay extends JFrame {
                 //Play back all of the data
                 // that was saved during
                 // capture.
-                playAudio();
+                playBack();
             }//end actionPerformed
         }//end ActionListener
         );//end addActionListener()
@@ -148,7 +148,7 @@ public class RecordAndPlay extends JFrame {
     //This method plays back the audio
     // data that has been saved in the
     // ByteArrayOutputStream
-    public void playAudio() {
+    public void playBack() {
         try {
             System.out.println("in PlayAudio");
 
@@ -178,8 +178,34 @@ public class RecordAndPlay extends JFrame {
             System.out.println(e);
             System.exit(0);
         }//end catch
-    }//end playAudio
+    }//end playBack
 
+    public void playAudio(byte[] audioBytes) {
+        try {
+            System.out.println("in PlayAudio");
+
+            //Get an input stream on the
+            // byte array containing the data
+            InputStream byteArrayInputStream = new ByteArrayInputStream(audioBytes);
+            AudioFormat audioFormat = getAudioFormat();
+            audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat, audioBytes.length / audioFormat.getFrameSize());
+            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
+            sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+            sourceDataLine.open(audioFormat);
+            sourceDataLine.start();
+
+            //Create a thread to play back
+            // the data and start it
+            // running.  It will run until
+            // all the data has been played
+            // back.
+            Thread playThread = new Thread(new PlayThread());
+            playThread.start();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.exit(0);
+        }//end catch
+    }//end playAudio
     //This method creates and returns an
     // AudioFormat object for a given set
     // of format parameters.  If these
@@ -188,6 +214,7 @@ public class RecordAndPlay extends JFrame {
     // allowable parameter values, which
     // are shown in comments following
     // the declarations.
+
     public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         //8000,11025,16000,22050,44100

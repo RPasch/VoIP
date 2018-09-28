@@ -40,6 +40,7 @@ public class Client {
     public static ChatInterface chat;
     public static String IP_ad;
     public static byte[] audioData;
+    public static int lengthOfaudioData;
 
     /**
      * @param args the command line arguments
@@ -50,10 +51,6 @@ public class Client {
         String who;
         chat = new ChatInterface();
         chat.show();
-    }
-
-    public static void sendVoiceNote() {
-
     }
 
     public static void stopCall() {
@@ -106,6 +103,19 @@ public class Client {
         return serverName;
     }
 
+    public static void sendVoiceNote() {
+        try {
+            String userTo = ChatInterface.chat_choice_dropdown.getSelectedItem();
+            out.writeUTF(userTo);
+            out.writeUTF("*");
+            lengthOfaudioData = audioData.length;
+            out.writeInt(audioData.length);
+            out.write(audioData, 0, audioData.length);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void sendOneMessage(String response) throws IOException {
 
         out.writeUTF(response);
@@ -141,6 +151,15 @@ public class Client {
         in = new DataInputStream(inFromServer);
         String inputFromServer = in.readUTF();
         return inputFromServer;
+    }
+
+    public static byte[] receiveAudioData() throws IOException {
+        inFromServer = client.getInputStream();
+        in = new DataInputStream(inFromServer);
+
+        byte[] audioDataReceved = new byte[lengthOfaudioData];
+        in.read(audioDataReceved, 0, lengthOfaudioData);
+        return audioDataReceved;
     }
 
     //Runs through list of usernames and check if the current username is already take , if so it assigns a new username

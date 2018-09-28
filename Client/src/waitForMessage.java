@@ -25,54 +25,70 @@ public class waitForMessage extends Thread {
 
     }
 
+    public static void receiveVoiceNote(byte[] audioData, String userFrom) {
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        int response = JOptionPane.showConfirmDialog(null, "Play?", "Received a VN from " + userFrom,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            try {
+
+            } catch (Exception ex) {
+                Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else if (response == JOptionPane.YES_OPTION) {
+            RecordAndPlay RaP = new RecordAndPlay();
+            RaP.playAudio(audioData);
+        }
+
+    }
+
     public static void createCallThread(String userIPtoCall, String userNametoCall) {
         boolean answered = false;
-        if(!Client.madeCall){
+        if (!Client.madeCall) {
             boolean answer = false;
             JDialog.setDefaultLookAndFeelDecorated(true);
-            int response = JOptionPane.showConfirmDialog(null,userNametoCall +  " is calling.", "Answer?",
+            int response = JOptionPane.showConfirmDialog(null, userNametoCall + " is calling.", "Answer?",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
                 answered = false;
                 try {
-                    Thread.sleep(1000);
                     Client.sendMessage("-", userNametoCall);
                     //ReceiverThread recvThread = new ReceiverThread(userIPtoCall , answered);
                     //recvThread.start();
                 } catch (Exception ex) {
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             } else if (response == JOptionPane.YES_OPTION) {
                 try {
-                    Thread.sleep(1000);
-                    
+
                     Client.sendMessage("+", userNametoCall);
-                    
+
                     System.out.println("I JUST SENT TO THIS IP ::: " + userIPtoCall);
-                    
+
                     answered = true;
                     ReceiverThread recvThread = new ReceiverThread(userIPtoCall);
                     recvThread.start();
                 } catch (Exception ex) {
                     Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
-        } else{
+        } else {
             try {
                 Client.madeCall = false;
                 String response = Client.receiveMsg();
-                
+
                 System.out.println("RESPONSE ::: " + response);
-                
+
                 if (response.equals("+")) {
                     CallerThread callThread = new CallerThread(userIPtoCall);
                     callThread.start();
                 } else {
                     JOptionPane.showMessageDialog(null, "she just ain't interested bro");
                 }
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -118,6 +134,11 @@ public class waitForMessage extends Thread {
                     String userNametoCall = Client.receiveMsg();
                     System.out.println("RECEIVED !!!!!!!!!!");
                     createCallThread(userIPtoCall, userNametoCall);
+                case '*':
+                    byte[] audioData = Client.receiveAudioData();
+                    String userFrom = Client.receiveMsg();
+                    System.out.println("RECEIVED !!!!!!!!!!");
+                    receiveVoiceNote(audioData, userFrom);
                 default:
                     String who = anything;
                     String message = Client.receiveMsg();

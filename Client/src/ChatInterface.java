@@ -453,7 +453,7 @@ public class ChatInterface extends javax.swing.JFrame {
     private javax.swing.JTextField IP_addr;
     public javax.swing.JButton RecordBTN;
     private javax.swing.JButton callBTN;
-    private java.awt.Choice chat_choice_dropdown;
+    public static java.awt.Choice chat_choice_dropdown;
     private javax.swing.JButton connect_btn;
     private javax.swing.JButton disconnect_btn;
     private javax.swing.JButton jButton1;
