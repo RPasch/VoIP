@@ -60,7 +60,7 @@ public class Client {
 
     public static void createConfCall() throws IOException {
         confGui = new confCallGui();
-        sendMessage("^", ChatInterface.username);
+        sendMessage(ChatInterface.username, "^");
         confGui.show();
         inConf = true;
     }
