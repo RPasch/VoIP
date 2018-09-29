@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,6 +74,25 @@ public class SocketHandler implements Runnable {
                     Server.sendCallRequest(username, usernameTo);
                     
                     Server.gui.updateActivity(username + " is calling " + usernameTo);
+                } else if (toUser.equals("^")) {
+                   String connectingUsername = in.readUTF();
+                   String connectingIP = Server.listOfUsers.get(connectingUsername).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
+                   connectingIP = connectingIP.substring(0, connectingIP.length() - 5);
+                   
+                   Server.confCallUsers.put(connectingUsername, connectingIP);
+                   
+                   String userlist = "";
+                   String ipList = "";
+                   
+                   for (Map.Entry<String, String> pair : Server.confCallUsers.entrySet()) {
+                       userlist = userlist + pair.getKey()+",";
+                       ipList = ipList + pair.getValue()+",";
+                   }
+                   userlist = userlist.substring(0, userlist.length() - 1);
+                   ipList = ipList.substring(0, ipList.length()-1);
+                   
+                   
+                           
                 } else {
                     if (message.equals("+") || message.equals("-")){
                         Server.sendCallResponse(message, toUser);

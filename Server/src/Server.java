@@ -26,7 +26,8 @@ public class Server extends Thread {
     private static BufferedReader br = null;
     public static ConcurrentHashMap<String, SocketHandler> listOfUsers = new ConcurrentHashMap<>();
     public static ServerGui gui;
-    
+    public static ConcurrentHashMap<String, String> confCallUsers = new ConcurrentHashMap<>();
+
     public static void main(String[] args) {
         int portNumber = 8000;
         ServerSocket serverSocket = null;
@@ -41,7 +42,7 @@ public class Server extends Thread {
 
         gui = new ServerGui();
         gui.show();
-        
+
         SocketHandler sh = null;
         try {
             clientSocket = serverSocket.accept();
@@ -106,7 +107,6 @@ public class Server extends Thread {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
-        
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
@@ -125,7 +125,6 @@ public class Server extends Thread {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
-        
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
@@ -143,7 +142,6 @@ public class Server extends Thread {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
-        
         for (Map.Entry<String, SocketHandler> pair : listOfUsers.entrySet()) {
             if (pair.getKey().equals(usernameTo) || pair.getKey().equals(usernameFrom)) {
                 try {
@@ -158,10 +156,9 @@ public class Server extends Thread {
         }
 
     }
-    
 
     public static void sendCallRequest(String usernameFrom, String usernameTo) {
-        
+
         OutputStream outFromServer = null;
         DataOutputStream out = null;
 
@@ -200,23 +197,22 @@ public class Server extends Thread {
         try {
             outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
             out = new DataOutputStream(outFromServer);
-            
+
             out.writeUTF(response);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void sendVoiceNote(byte[] voicenote, String username) {
         try {
-            
+
             outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
             out = new DataOutputStream(outFromServer);
-            
-            out.writeUTF("*");
-            
-            out.writeUTF(username);
 
+            out.writeUTF("*");
+
+            out.writeUTF(username);
 
             out.writeInt(voicenote.length);
             out.write(voicenote, 0, voicenote.length);
@@ -224,7 +220,7 @@ public class Server extends Thread {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void broadcastVN(String username, byte[] voicenote) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -233,17 +229,38 @@ public class Server extends Thread {
             try {
                 outFromServer = pair.getValue().getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
                 out = new DataOutputStream(outFromServer);
-                
+
                 out.writeUTF("*");
                 out.writeUTF(username);
                 out.writeInt(voicenote.length);
                 out.write(voicenote, 0, voicenote.length);
-                
+
             } catch (Exception e) {
                 System.err.println("problem in broadcast " + e);
             }
         }
 
+    }
+
+    public static void sendConfUsers(String users, String IPs) {
+        try {
+            for (Map.Entry<String, String> pair : confCallUsers.entrySet()) {
+                try {
+                    outFromServer = listOfUsers.get(pair.getKey()).getClientSocket().getOutputStream();//.getClientSocket().getOutputStream();
+                    out = new DataOutputStream(outFromServer);
+
+                    out.writeUTF("^");
+                    out.writeUTF(users);
+                    out.writeUTF(IPs);
+                    
+                } catch (Exception e) {
+                    System.err.println("problem in broadcast " + e);
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
