@@ -42,10 +42,10 @@ public class CallerThread extends Thread {
 
     public static void connectSockets() {
         try {
-            int TALK_PORT = 7998;
+            int TALK_PORT = 7997;
             int LISTEN_PORT = 7998;
 
-            System.out.println("************* " + theirIP.substring(0, theirIP.length() - 1));
+            System.out.println("In Caller Thread: connectSockets " + theirIP.substring(0, theirIP.length() - 1));
             InetAddress theirInet = InetAddress.getByName(theirIP.substring(0, theirIP.length() - 1));
 
             receiveSocket = new DatagramSocket(LISTEN_PORT);
