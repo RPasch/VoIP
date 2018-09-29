@@ -91,7 +91,11 @@ public class SocketHandler implements Runnable {
                    userlist = userlist.substring(0, userlist.length() - 1);
                    ipList = ipList.substring(0, ipList.length()-1);
                    
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    System.out.println(userlist+"\n"+ipList);
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");                    
                    
+                   Server.sendConfUsers(userlist, ipList);
                            
                 } else {
                     if (message.equals("+") || message.equals("-")){
