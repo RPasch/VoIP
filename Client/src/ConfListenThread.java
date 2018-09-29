@@ -37,7 +37,7 @@ public class ConfListenThread extends Thread {
             DatagramPacket inPacket;
             Client.inConf = true;
 
-            while (Client.inCall) {//use to be keepPlay
+            while (Client.inConf) {//use to be keepPlay
                 inPacket = new DatagramPacket(tempBuffer, tempBuffer.length);
                 this.socket.receive(inPacket);
 

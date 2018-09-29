@@ -34,7 +34,7 @@ public class ConfTalkThread extends Thread {
             targetDataLine.start();
             tempBuffer = new byte[BUFFER_SIZE];
 
-            while (Client.inCall) {
+            while (Client.inConf) {
                 int cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
                 if (cnt > 0) {
                     for (InetAddress ia : ConfThread.theirInets) {
