@@ -15,7 +15,7 @@ public class TalkThread extends Thread {
     private DatagramSocket socket;
     private int port;
     private InetAddress ip;
-
+    private int BUFFER_SIZE = 4000;
     public AudioFormat audioFormat;
     public TargetDataLine targetDataLine;
 
@@ -34,7 +34,7 @@ public class TalkThread extends Thread {
             targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
             targetDataLine.open(audioFormat);
             targetDataLine.start();
-
+            tempBuffer = new byte[BUFFER_SIZE];
             while (Client.inCall) {
                 int cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
                 if (cnt > 0) {
