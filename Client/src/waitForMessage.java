@@ -6,8 +6,11 @@
 //package rw354_tut1_client;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import static java.nio.file.Files.list;
 import static java.rmi.Naming.list;
+import java.util.ArrayList;
 import java.util.Arrays;
 import static java.util.Collections.list;
 import java.util.List;
@@ -179,7 +182,7 @@ public class waitForMessage extends Thread {
                     userList = Arrays.asList(userNames.split(","));
                     ipList = Arrays.asList(ipAddresses.split(","));
                     confCallGui.updateList(userList);
-                    ConfThread confT = new ConfThread();
+                    convertIPtoInet();
                     break;
                 case '~':
                     System.out.println("in ~~~~~~");
@@ -188,6 +191,7 @@ public class waitForMessage extends Thread {
                     userList = Arrays.asList(userNamesExit.split(","));
                     ipList = Arrays.asList(ipAddressesExit.split(","));
                     confCallGui.updateList(userList);
+                    convertIPtoInet();
                     break;
                 default:
                     System.out.println("in defualt");
@@ -198,6 +202,20 @@ public class waitForMessage extends Thread {
             }
 
         }
+    }
+
+    public static void convertIPtoInet() {
+        try {
+            ArrayList<InetAddress> temp = new ArrayList<>();
+            for (int i = 0; i < ipList.size(); i++) {
+                temp.add(InetAddress.getByName(ipList.get(i)));
+            }
+            ConfThread.theirInets = temp;
+
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(waitForMessage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

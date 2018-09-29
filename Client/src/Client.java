@@ -63,6 +63,8 @@ public class Client {
         sendMessage(ChatInterface.username, "^");
         confGui.show();
         inConf = true;
+        ConfThread confT = new ConfThread();
+        confT.start();
     }
 
     public static void exitConf() throws IOException {
