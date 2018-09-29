@@ -42,6 +42,7 @@ public class TalkThread extends Thread {
                     this.socket.send(outPacket);
                 }
             }
+            this.socket.close();
 
         } catch (Exception ex) {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);

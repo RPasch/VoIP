@@ -119,7 +119,7 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        IP_addr.setText("146.232.49.63");
+        IP_addr.setText("146.232.49.201");
         IP_addr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IP_addrActionPerformed(evt);

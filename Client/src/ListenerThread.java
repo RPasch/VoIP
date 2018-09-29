@@ -37,7 +37,7 @@ public class ListenerThread extends Thread {
             DatagramPacket inPacket;
             keepPlay = true;
 
-            while (keepPlay) {
+            while (Client.inCall) {//use to be keepPlay
                 inPacket = new DatagramPacket(tempBuffer, tempBuffer.length);
                 this.socket.receive(inPacket);
 
@@ -62,6 +62,7 @@ public class ListenerThread extends Thread {
                 sourceDataLine.close();
 
             }
+            this.socket.close();
 
         } catch (Exception ex) {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
