@@ -38,11 +38,11 @@ public class ConfTalkThread extends Thread {
                 int cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
                 if (cnt > 0) {
                     for (InetAddress ia : ConfThread.theirInets) {
-                        String iaStr = ia.toString().substring(0, ia.toString().length() - 1);
+                        String iaStr = ia.toString().substring(1, ia.toString().length());
                         String myIpString = Client.client.getLocalAddress().getHostAddress();
-                        if (!ia.equals(myIpString)) {
-                            System.out.println(myIpString);
-                            System.out.println(iaStr);
+                        if (!iaStr.equals(myIpString)) {
+                            System.out.println("|" + myIpString + "|");
+                            System.out.println("|" + iaStr + "|");
                             DatagramPacket outPacket = new DatagramPacket(tempBuffer, tempBuffer.length, ia, this.port);
                             this.socket.send(outPacket);
                         }
