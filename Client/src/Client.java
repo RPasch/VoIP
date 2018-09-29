@@ -24,11 +24,11 @@ import javax.swing.JOptionPane;
  * @author 18214304
  */
 public class Client {
-    
+
     public static boolean madeCall = false;
     public static boolean inCall = false;
     public static RecordAndPlay RaP;
-    
+
     public boolean valid_connection = true;
     private static int port = 8000;
     static String serverName = "146.232.49.154";
@@ -42,6 +42,8 @@ public class Client {
     public static byte[] audioData;
     public static int lengthOfaudioData;
     public static String myIP;
+    public static int TALK_PORT = 7997;
+    public static int LISTEN_PORT = 7998;
 
     /**
      * @param args the command line arguments
@@ -53,16 +55,15 @@ public class Client {
         chat = new ChatInterface();
         chat.show();
     }
-    
+
     public static void stopCall() {
         inCall = false;
-        ListenerThread.setKeepPlay(false);
         System.out.println("Stopping.....not yet");
     }
-    
+
     public static void record() {
         RaP = new RecordAndPlay();
-        
+
         System.out.println("Recording.....not yet");
     }
 
@@ -74,10 +75,10 @@ public class Client {
         try {
             IP_ad = chat.IP;
             client = new Socket(IP_ad, port);
-            
+
             myIP = client.getRemoteSocketAddress().toString().replace("/", "");
             myIP = myIP.substring(0, myIP.length() - 5);
-            
+
             validIP = client.isConnected();
             if (!validIP) {
                 JOptionPane.showMessageDialog(chat, "invalid IP");
@@ -92,23 +93,23 @@ public class Client {
             out = new DataOutputStream(outToServer);
             out.writeUTF(chat.username);
             waitForMessage waitFor = new waitForMessage(chat);
-            
+
             waitFor.start();
-            
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(chat, "Could not connect to server : " + e);
         }
-        
+
     }
-    
+
     public static String getIPaddr() {
         return IP_ad;
     }
-    
+
     public static String getServerName() {
         return serverName;
     }
-    
+
     public static void sendVoiceNote() {
         try {
             String userTo = ChatInterface.chat_choice_dropdown.getSelectedItem();
@@ -123,13 +124,13 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void sendOneMessage(String response) throws IOException {
-        
+
         out.writeUTF(response);
-        
+
     }
-    
+
     public static void sendMessage(String msg, String usr) throws IOException {
         out.writeUTF(usr);
         out.writeUTF(msg);
@@ -151,9 +152,9 @@ public class Client {
         } catch (IOException ex) {
             System.err.println("Disconnection Error : " + ex);
         }
-        
+
     }
-    
+
     public static String receiveMsg() throws IOException {
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
@@ -162,10 +163,10 @@ public class Client {
         System.out.println("in receiveMsg ...received  : |" + inputFromServer + "|");
         return inputFromServer;
     }
-    
+
     public static byte[] receiveAudioData() throws IOException {
         byte[] audioDataReceved;
-        
+
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
         int lengthOfAudio = in.readInt();
@@ -173,9 +174,9 @@ public class Client {
         in.readFully(audioDataReceved, 0, lengthOfAudio);
         System.out.println(lengthOfAudio + " contents of voicenote " + " " + audioDataReceved[0]);
         System.out.println("RECEIVER last two entries : " + audioDataReceved[lengthOfAudio - 2] + "  " + audioDataReceved[lengthOfAudio - 1]);
-        
+
         return audioDataReceved;
-        
+
     }
 
     //Runs through list of usernames and check if the current username is already take , if so it assigns a new username
@@ -187,10 +188,10 @@ public class Client {
             double randomInt = (Math.random());
             chat.username = chat.username + (int) (randomInt * 1000);
         }
-        
+
         return valid;
     }
-    
+
     public static void startCall(String msg_choice) {
         try {
             out.writeUTF("!");
@@ -199,7 +200,7 @@ public class Client {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
 }

@@ -42,21 +42,21 @@ public class CallerThread extends Thread {
 
     public static void connectSockets() {
         try {
-            int TALK_PORT = 7997;
-            int LISTEN_PORT = 7998;
 
             System.out.println("In Caller Thread: connectSockets " + theirIP.substring(0, theirIP.length() - 1));
             InetAddress theirInet = InetAddress.getByName(theirIP.substring(0, theirIP.length() - 1));
 
-            receiveSocket = new DatagramSocket(LISTEN_PORT);
-            sendSocket = new DatagramSocket(TALK_PORT);
+            receiveSocket = new DatagramSocket(Client.LISTEN_PORT);
+            sendSocket = new DatagramSocket(Client.TALK_PORT);
 
-            talkThread = new TalkThread(sendSocket, theirInet, LISTEN_PORT);
+            talkThread = new TalkThread(sendSocket, theirInet, Client.LISTEN_PORT);
             listenThread = new ListenerThread(receiveSocket);
             talkThread.start();
             listenThread.start();
 
             Client.inCall = true;
+            Client.TALK_PORT = Client.TALK_PORT - 2;
+            Client.LISTEN_PORT = Client.LISTEN_PORT - 2;
         } catch (Exception ex) {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
