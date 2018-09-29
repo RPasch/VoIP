@@ -135,7 +135,6 @@ public class waitForMessage extends Thread {
                     chat.addAllusers(connectedUsr);
                     break;
                 case '#':
-
                     String disconnectedUsr = Client.receiveMsg();
                     String list_of = Client.receiveMsg().substring(1);
                     chat.removeUsers(disconnectedUsr, list_of);
@@ -183,7 +182,7 @@ public class waitForMessage extends Thread {
                     ConfThread confT = new ConfThread();
                     break;
                 case '~':
-                    System.out.println("in ^^^^^^^");
+                    System.out.println("in ~~~~~~");
                     String userNamesExit = Client.receiveMsg();
                     String ipAddressesExit = Client.receiveMsg();
                     userList = Arrays.asList(userNamesExit.split(","));

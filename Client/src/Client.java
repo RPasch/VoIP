@@ -61,12 +61,13 @@ public class Client {
     public static void createConfCall() throws IOException {
         confGui = new confCallGui();
         sendMessage("^", ChatInterface.username);
+        confGui.show();
         inConf = true;
     }
 
     public static void exitConf() throws IOException {
         confGui.dispose();
-        sendMessage("~", ChatInterface.username);
+        sendMessage(ChatInterface.username, "~");
         inConf = false;
     }
 
