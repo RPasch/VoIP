@@ -6,6 +6,11 @@
 //package rw354_tut1_client;
 
 import java.io.IOException;
+import static java.nio.file.Files.list;
+import static java.rmi.Naming.list;
+import java.util.Arrays;
+import static java.util.Collections.list;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -17,6 +22,9 @@ import javax.swing.JOptionPane;
  * @author 18214304
  */
 public class waitForMessage extends Thread {
+
+    public static List<String> ipList;
+    public static List<String> userList;
 
     ChatInterface chat = null;
 
@@ -164,6 +172,23 @@ public class waitForMessage extends Thread {
 //                    System.out.println(weird13 + " weird1");
 //                    System.out.println(weird33 + " weird2");
                     receiveVoiceNote(audioData, userFrom);
+                    break;
+                case '^':
+                    System.out.println("in ^^^^^^^");
+                    String userNames = Client.receiveMsg();
+                    String ipAddresses = Client.receiveMsg();
+                    userList = Arrays.asList(userNames.split(","));
+                    ipList = Arrays.asList(ipAddresses.split(","));
+                    confCallGui.updateList(userList);
+                    ConfThread confT = new ConfThread();
+                    break;
+                case '~':
+                    System.out.println("in ^^^^^^^");
+                    String userNamesExit = Client.receiveMsg();
+                    String ipAddressesExit = Client.receiveMsg();
+                    userList = Arrays.asList(userNamesExit.split(","));
+                    ipList = Arrays.asList(ipAddressesExit.split(","));
+                    confCallGui.updateList(userList);
                     break;
                 default:
                     System.out.println("in defualt");

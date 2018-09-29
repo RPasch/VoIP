@@ -44,6 +44,8 @@ public class Client {
     public static String myIP;
     public static int TALK_PORT = 7997;
     public static int LISTEN_PORT = 7998;
+    public static confCallGui confGui;
+    public static boolean inConf = false;
 
     /**
      * @param args the command line arguments
@@ -54,6 +56,18 @@ public class Client {
         String who;
         chat = new ChatInterface();
         chat.show();
+    }
+
+    public static void createConfCall() throws IOException {
+        confGui = new confCallGui();
+        sendMessage("^", ChatInterface.username);
+        inConf = true;
+    }
+
+    public static void exitConf() throws IOException {
+        confGui.dispose();
+        sendMessage("~", ChatInterface.username);
+        inConf = false;
     }
 
     public static void stopCall() {
