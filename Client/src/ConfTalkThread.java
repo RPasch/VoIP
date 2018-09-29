@@ -38,8 +38,12 @@ public class ConfTalkThread extends Thread {
                 int cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
                 if (cnt > 0) {
                     for (InetAddress ia : ConfThread.theirInets) {
-                        DatagramPacket outPacket = new DatagramPacket(tempBuffer, tempBuffer.length, ia, this.port);
-                        this.socket.send(outPacket);
+                        if (ia.equals(Client.client.getInetAddress())) {
+                            System.out.println(Client.client.getInetAddress());
+                            System.out.println(ia);
+                            DatagramPacket outPacket = new DatagramPacket(tempBuffer, tempBuffer.length, ia, this.port);
+                            this.socket.send(outPacket);
+                        }
                     }
                 }
             }
