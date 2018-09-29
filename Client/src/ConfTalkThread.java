@@ -38,7 +38,7 @@ public class ConfTalkThread extends Thread {
                 int cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
                 if (cnt > 0) {
                     for (InetAddress ia : ConfThread.theirInets) {
-                        if (!ia.equals(Client.client.getLocalAddress().getHostAddress())) {
+                        if (!ia.equals("/" + Client.client.getLocalAddress().getHostAddress())) {
                             System.out.println(Client.client.getLocalAddress().getHostAddress());
                             System.out.println(ia);
                             DatagramPacket outPacket = new DatagramPacket(tempBuffer, tempBuffer.length, ia, this.port);
