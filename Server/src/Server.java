@@ -1,4 +1,3 @@
-//package rw354_tut1_server;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -28,10 +27,10 @@ public class Server extends Thread {
     public static ServerGui gui;
     public static ConcurrentHashMap<String, String> confCallUsers = new ConcurrentHashMap<>();
 
- /**
- * The main method of Server that connects to users , opens sockets and out/in
- * put lines and starts the gui
- */
+    /**
+     * The main method of Server that connects to users , opens sockets and
+     * out/in put lines and starts the gui
+     */
     public static void main(String[] args) {
         int portNumber = 8000;
         ServerSocket serverSocket = null;
@@ -90,9 +89,10 @@ public class Server extends Thread {
         }
 
     }
-/**
- * Converts the ArrayList of users to a string
- */
+
+    /**
+     * Converts the ArrayList of users to a string
+     */
     public static String getListOfUsers() {
         String userList = "";
 
@@ -108,10 +108,12 @@ public class Server extends Thread {
 
         return userList;
     }
-/**
- * Sends the currently connected users to a user
- * @param userList the user list
- */
+
+    /**
+     * Sends the currently connected users to a user
+     *
+     * @param userList the user list
+     */
     public static void sendUserList(String userList) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -129,11 +131,13 @@ public class Server extends Thread {
         }
 
     }
-/**
- * Sends a message to all user
- * @param usernamem Who the call is from
- * @param the message
- */
+
+    /**
+     * Sends a message to all user
+     *
+     * @param usernamem Who the call is from
+     * @param the message
+     */
     public static void broadcast(String username, String message) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -150,12 +154,14 @@ public class Server extends Thread {
         }
 
     }
-/**
- * Sends a message to a user
- * @param usernameFrom Who the call is from
- * @param usernameTo who th call is to
- * @param the message
- */
+
+    /**
+     * Sends a message to a user
+     *
+     * @param usernameFrom Who the call is from
+     * @param usernameTo who th call is to
+     * @param the message
+     */
     public static void whisper(String usernameFrom, String usernameTo, String message) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -174,11 +180,14 @@ public class Server extends Thread {
         }
 
     }
-/**
- * Finds the user who the call is meant for and sends the user a special character
- * @param usernameFrom Who the call is from
- * @param usernameTo who th call is to
- */
+
+    /**
+     * Finds the user who the call is meant for and sends the user a special
+     * character
+     *
+     * @param usernameFrom Who the call is from
+     * @param usernameTo who th call is to
+     */
     public static void sendCallRequest(String usernameFrom, String usernameTo) {
 
         OutputStream outFromServer = null;
@@ -214,11 +223,13 @@ public class Server extends Thread {
         }
 
     }
-/**
- *Sends the special character to clients to inform them of an incoming call
- * @param username who to send to
- * @param response their Ip address
- */
+
+    /**
+     * Sends the special character to clients to inform them of an incoming call
+     *
+     * @param username who to send to
+     * @param response their Ip address
+     */
     public static void sendCallResponse(String response, String username) {
         try {
             outFromServer = listOfUsers.get(username).getClientSocket().getOutputStream();
@@ -229,11 +240,14 @@ public class Server extends Thread {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-/**
- *Sends the special character to clients to inform them of an incoming voice note
- * @param username who to send to
- * @param voicenote their Ip address
- */
+
+    /**
+     * Sends the special character to clients to inform them of an incoming
+     * voice note
+     *
+     * @param username who to send to
+     * @param voicenote their Ip address
+     */
     public static void sendVoiceNote(byte[] voicenote, String username) {
         try {
 
@@ -250,11 +264,13 @@ public class Server extends Thread {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-/**
- * Broadcasts the voicenote to all users
- * @param username who to send to
- * @param voicenote to be sent
- */
+
+    /**
+     * Broadcasts the voicenote to all users
+     *
+     * @param username who to send to
+     * @param voicenote to be sent
+     */
     public static void broadcastVN(String username, byte[] voicenote) {
         OutputStream outFromServer = null;
         DataOutputStream out = null;
@@ -275,11 +291,14 @@ public class Server extends Thread {
         }
 
     }
-/**
- *Sends the special character to clients to inform them of an incoming conference
- * @param users who to send to
- * @param IPs their Ip address
- */
+
+    /**
+     * Sends the special character to clients to inform them of an incoming
+     * conference
+     *
+     * @param users who to send to
+     * @param IPs their Ip address
+     */
     public static void sendConfUsers(String users, String IPs) {
         try {
             for (Map.Entry<String, String> pair : confCallUsers.entrySet()) {
@@ -290,7 +309,7 @@ public class Server extends Thread {
                     out.writeUTF("^");
                     out.writeUTF(users);
                     out.writeUTF(IPs);
-                    
+
                 } catch (Exception e) {
                     System.err.println("problem in broadcast " + e);
                 }

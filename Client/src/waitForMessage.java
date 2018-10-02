@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//package rw354_tut1_client;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -35,14 +34,14 @@ public class waitForMessage extends Thread {
         this.chat = chat;
 
     }
-    
-     /**
+
+    /**
      * Checks if you want to play the voice note and starts the gui, if accepted
      * it will play the audio
+     *
      * @params userIPtoCall the user's IP that you want to call
      * @param userNametoCall The user's name that you wish to call
      */
-    
     public static void receiveVoiceNote(byte[] audioData, String userFrom) {
         JDialog.setDefaultLookAndFeelDecorated(true);
         System.out.println("Received a VN from " + userFrom);
@@ -61,15 +60,15 @@ public class waitForMessage extends Thread {
         }
 
     }
-    
+
     /**
      * This method checks if you are calling or receiving and informs the server
      * It checks if you want to decline or accept the call and starts the
      * related gui
+     *
      * @params userIPtoCall the user's IP that you want to call
      * @param userNametoCall The user's name that you wish to call
      */
-    
     public static void createCallThread(String userIPtoCall, String userNametoCall) {
         boolean answered = false;
         if (!Client.madeCall) {
@@ -198,6 +197,7 @@ public class waitForMessage extends Thread {
 
         }
     }
+
     /**
      * Simply converts IP to INet address
      */

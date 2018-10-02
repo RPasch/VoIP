@@ -1,4 +1,3 @@
-//package rw354_tut1_server;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -9,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The class that handles all the sockets and is in control of all the currently 
- * connected clients. It removes , add clients , updates the gui and responds to 
+ * The class that handles all the sockets and is in control of all the currently
+ * connected clients. It removes , add clients , updates the gui and responds to
  * Clients by acting as a proxy and sending special characters
  */
 public class SocketHandler implements Runnable {
@@ -25,10 +24,10 @@ public class SocketHandler implements Runnable {
         this.clientSocket = clientSocket;
     }
 
- /**
- *Manages all the special characters that is sent and received from the clients
- * and calls the corresponding methods.
- */
+    /**
+     * Manages all the special characters that is sent and received from the
+     * clients and calls the corresponding methods.
+     */
     @Override
     public void run() {
         System.out.println("new client thread created");
@@ -95,7 +94,7 @@ public class SocketHandler implements Runnable {
                         userlist = userlist + pair.getKey() + ",";
                         ipList = ipList + pair.getValue().substring(0, pair.getValue().length() - 1) + ",";
                     }
-                    
+
                     if (!userlist.equals("")) {
                         userlist = userlist.substring(0, userlist.length() - 1);
                         ipList = ipList.substring(0, ipList.length() - 1);
@@ -117,7 +116,7 @@ public class SocketHandler implements Runnable {
                         userlist = userlist + pair.getKey() + ",";
                         ipList = ipList + pair.getValue().substring(0, pair.getValue().length() - 1) + ",";
                     }
-                    
+
                     if (!userlist.equals("")) {
                         userlist = userlist.substring(0, userlist.length() - 1);
                         ipList = ipList.substring(0, ipList.length() - 1);

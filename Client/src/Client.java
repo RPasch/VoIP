@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//package rw354_tut1_client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -44,7 +43,7 @@ public class Client {
     public static boolean inConf = false;
 
     /**
-     * The main of the program
+     * The main of theprogram
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
@@ -53,7 +52,8 @@ public class Client {
         chat = new ChatInterface();
         chat.show();
     }
-     /**
+
+    /**
      * Start the conference call gui and calls all required functions
      */
     public static void createConfCall() throws IOException {
@@ -64,6 +64,7 @@ public class Client {
         ConfThread confT = new ConfThread();
         confT.start();
     }
+
     /**
      * Exits the conference call and closes all sockets
      */
@@ -72,6 +73,7 @@ public class Client {
         sendMessage(ChatInterface.username, "~");
         inConf = false;
     }
+
     /**
      * Exits call and closes all sockets and informs server
      */
@@ -79,8 +81,9 @@ public class Client {
         inCall = false;
         System.out.println("Stopping.....not yet");
     }
+
     /**
-     * starts the recoding 
+     * starts the recoding
      */
     public static void record() {
         RaP = new RecordAndPlay();
@@ -122,18 +125,21 @@ public class Client {
         }
 
     }
+
     /**
      * get IP address
      */
     public static String getIPaddr() {
         return IP_ad;
     }
+
     /**
      * Get the name of the server
      */
     public static String getServerName() {
         return serverName;
     }
+
     /**
      * Opens sockets and starts input and output streams and sends voice note
      */
@@ -151,8 +157,10 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * Sends only one message
+     *
      * @params response the special character
      */
     public static void sendOneMessage(String response) throws IOException {
@@ -160,8 +168,10 @@ public class Client {
         out.writeUTF(response);
 
     }
+
     /**
      * Sends two messages
+     *
      * @params msg , usr is the user and message that is to be sent
      */
     public static void sendMessage(String msg, String usr) throws IOException {
@@ -187,6 +197,7 @@ public class Client {
         }
 
     }
+
     /**
      * Receives a message from the serve
      */
@@ -198,6 +209,7 @@ public class Client {
         System.out.println("in receiveMsg ...received  : |" + inputFromServer + "|");
         return inputFromServer;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -228,7 +240,8 @@ public class Client {
 
         return valid;
     }
- /**
+
+    /**
      * @param args the command line arguments
      */
     public static void startCall(String msg_choice) {

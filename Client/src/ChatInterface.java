@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//package rw354_tut1_client;
 
 import java.io.IOException;
 //import static java.time.Clock.system;
@@ -94,7 +88,6 @@ public class ChatInterface extends javax.swing.JFrame {
 
         chat_choice_dropdown.add("All");
 
-        username_txt.setText("RabzP");
         username_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 username_txtActionPerformed(evt);
@@ -122,7 +115,6 @@ public class ChatInterface extends javax.swing.JFrame {
             }
         });
 
-        IP_addr.setText("146.232.49.201");
         IP_addr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IP_addrActionPerformed(evt);
