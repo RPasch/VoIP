@@ -84,7 +84,7 @@ public class SocketHandler implements Runnable {
                     String connectingUsername = message;
                     String connectingIP = Server.listOfUsers.get(connectingUsername).getClientSocket().getRemoteSocketAddress().toString().replace("/", "");
                     connectingIP = connectingIP.substring(0, connectingIP.length() - 5);
-
+		    Server.gui.updateActivity(username + " joined a conference call");
                     Server.confCallUsers.put(connectingUsername, connectingIP);
 
                     String userlist = "";
