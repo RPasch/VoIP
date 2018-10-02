@@ -19,10 +19,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 //146.232.49.154
 
-/**
- *
- * @author 18214304
- */
 public class Client {
 
     public static boolean madeCall = false;
@@ -48,7 +44,7 @@ public class Client {
     public static boolean inConf = false;
 
     /**
-     * @param args the command line arguments
+     * The main of the program
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
@@ -57,7 +53,9 @@ public class Client {
         chat = new ChatInterface();
         chat.show();
     }
-
+     /**
+     * Start the conference call gui and calls all required functions
+     */
     public static void createConfCall() throws IOException {
         confGui = new confCallGui();
         sendMessage(ChatInterface.username, "^");
@@ -66,18 +64,24 @@ public class Client {
         ConfThread confT = new ConfThread();
         confT.start();
     }
-
+    /**
+     * Exits the conference call and closes all sockets
+     */
     public static void exitConf() throws IOException {
         confGui.dispose();
         sendMessage(ChatInterface.username, "~");
         inConf = false;
     }
-
+    /**
+     * Exits call and closes all sockets and informs server
+     */
     public static void stopCall() {
         inCall = false;
         System.out.println("Stopping.....not yet");
     }
-
+    /**
+     * starts the recoding 
+     */
     public static void record() {
         RaP = new RecordAndPlay();
 
@@ -118,15 +122,21 @@ public class Client {
         }
 
     }
-
+    /**
+     * get IP address
+     */
     public static String getIPaddr() {
         return IP_ad;
     }
-
+    /**
+     * Get the name of the server
+     */
     public static String getServerName() {
         return serverName;
     }
-
+    /**
+     * Opens sockets and starts input and output streams and sends voice note
+     */
     public static void sendVoiceNote() {
         try {
             String userTo = ChatInterface.chat_choice_dropdown.getSelectedItem();
@@ -141,13 +151,19 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    /**
+     * Sends only one message
+     * @params response the special character
+     */
     public static void sendOneMessage(String response) throws IOException {
 
         out.writeUTF(response);
 
     }
-
+    /**
+     * Sends two messages
+     * @params msg , usr is the user and message that is to be sent
+     */
     public static void sendMessage(String msg, String usr) throws IOException {
         out.writeUTF(usr);
         out.writeUTF(msg);
@@ -171,7 +187,9 @@ public class Client {
         }
 
     }
-
+    /**
+     * Receives a message from the serve
+     */
     public static String receiveMsg() throws IOException {
         inFromServer = client.getInputStream();
         in = new DataInputStream(inFromServer);
@@ -180,7 +198,9 @@ public class Client {
         System.out.println("in receiveMsg ...received  : |" + inputFromServer + "|");
         return inputFromServer;
     }
-
+    /**
+     * @param args the command line arguments
+     */
     public static byte[] receiveAudioData() throws IOException {
         byte[] audioDataReceved;
 
@@ -208,7 +228,9 @@ public class Client {
 
         return valid;
     }
-
+ /**
+     * @param args the command line arguments
+     */
     public static void startCall(String msg_choice) {
         try {
             out.writeUTF("!");

@@ -9,6 +9,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
+
+    /**
+     *The class that is responsible for sending audio to another user 
+     */
 public class TalkThread extends Thread {
 
     private byte[] tempBuffer;
@@ -24,7 +28,11 @@ public class TalkThread extends Thread {
         this.ip = ip;
         this.port = port;
     }
-
+    
+     /**
+     * The method that is run on this thread that send udp from to others and records it
+     */
+    
     @Override
     public void run() {
         try {
@@ -48,7 +56,11 @@ public class TalkThread extends Thread {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /**
+     * The audio format of the audio
+     */
+    
     public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         //8000,11025,16000,22050,44100

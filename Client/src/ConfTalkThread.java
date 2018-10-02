@@ -9,6 +9,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
+    /**
+     *The class that is responsible for sending audio to conference call 
+     */
 public class ConfTalkThread extends Thread {
 
     private byte[] tempBuffer;
@@ -22,7 +25,10 @@ public class ConfTalkThread extends Thread {
         this.socket = sendSocket;
         this.port = LISTEN_PORT;
     }
-
+    
+    /**
+     * The method that is run on this thread that send udp from to others and records it
+     */
     @Override
     public void run() {
         try {

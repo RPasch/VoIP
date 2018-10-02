@@ -6,15 +6,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author 18214304
- */
+    /**
+     * @param This thread starts the conference call and calls upon listeners and talkers
+     */
 public class ConfThread extends Thread {
 
     public List<String> userList;
@@ -30,7 +24,10 @@ public class ConfThread extends Thread {
         this.userList = waitForMessage.userList;
         this.ipList = waitForMessage.ipList;
     }
-
+     /**
+     * This method calls the method to connects the sockets of the caller and the receiver by informing the server
+     */
+    
     @Override
     public void run() {
         System.out.println("IN CALLER THREAD");
@@ -40,7 +37,9 @@ public class ConfThread extends Thread {
         }
 
     }
-
+     /**
+     * This method connects the sockets of th caller and the receiver by informing the serve
+     */
     public static void connectSockets() {
         try {
 

@@ -1,26 +1,4 @@
-/*File RecordAndPlay.java
-This program demonstrates the capture
-and subsequent playback of audio data.
 
-A GUI appears on the screen containing
-the following buttons:
-Capture
-Stop
-Playback
-
-Input data from a microphone is
-captured and saved in a
-ByteArrayOutputStream object when the
-user clicks the Capture button.
-
-Data capture stops when the user clicks
-the Stop button.
-
-Playback begins when the user clicks
-the Playback button.
-
-Tested using SDK 1.4.0 under Win2000
-**************************************/
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,12 +14,7 @@ public class RecordAndPlay extends JFrame {
     TargetDataLine targetDataLine;
     AudioInputStream audioInputStream;
     SourceDataLine sourceDataLine;
-
-//    public static void main(String args[]) {
-//
-//        new RecordAndPlay();
-//
-//    }
+    
     public RecordAndPlay(int n) {
 
     }
@@ -92,9 +65,7 @@ public class RecordAndPlay extends JFrame {
                 playBtn.setEnabled(true);
                 sendBtn.setEnabled(true);
 
-                //Terminate the capturing of
-                // input data from the
-                // microphone.
+                //Terminate the capturing of input data from the microphone.
                 stopCapture = true;
             }//end actionPerformed
         }//end ActionListener
@@ -104,9 +75,7 @@ public class RecordAndPlay extends JFrame {
         playBtn.addActionListener(new ActionListener() {
             public void actionPerformed(
                     ActionEvent e) {
-                //Play back all of the data
-                // that was saved during
-                // capture.
+                //Play back all of the data that was saved during capture.
                 playBack();
             }//end actionPerformed
         }//end ActionListener
@@ -121,8 +90,7 @@ public class RecordAndPlay extends JFrame {
         setVisible(true);
     }//end constructor
 
-    //This method captures audio input
-    // from a microphone and saves it in
+    //This method captures audio input from a microphone and saves it in
     // a ByteArrayOutputStream object.
     public void captureAudio() {
         try {
@@ -149,20 +117,16 @@ public class RecordAndPlay extends JFrame {
 
     }//end captureAudio method
 
-    //This method plays back the audio
-    // data that has been saved in the
+    //This method plays back the audio data that has been saved in the
     // ByteArrayOutputStream
     public void playBack() {
         try {
             System.out.println("in PlayAudio");
 
-            //Get everything set up for
-            // playback.
-            //Get the previously-saved data
-            // into a byte array object.
+            //Get everything set up for playback.
+            //Get the previously-saved data into a byte array object.
             byte audioData[] = byteArrayOutputStream.toByteArray();
-            //Get an input stream on the
-            // byte array containing the data
+            //Get an input stream on the byte array containing the data
             InputStream byteArrayInputStream = new ByteArrayInputStream(audioData);
             AudioFormat audioFormat = getAudioFormat();
             audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat, audioData.length / audioFormat.getFrameSize());
@@ -171,11 +135,7 @@ public class RecordAndPlay extends JFrame {
             sourceDataLine.open(audioFormat);
             sourceDataLine.start();
 
-            //Create a thread to play back
-            // the data and start it
-            // running.  It will run until
-            // all the data has been played
-            // back.
+          
             Thread playThread = new Thread(new PlayThread());
             playThread.start();
         } catch (Exception e) {
@@ -188,8 +148,7 @@ public class RecordAndPlay extends JFrame {
         try {
             System.out.println("in PlayAudio");
 
-            //Get an input stream on the
-            // byte array containing the data
+            //Get an input stream on the byte array containing the data
             InputStream byteArrayInputStream = new ByteArrayInputStream(audioBytes);
             AudioFormat audioFormat = getAudioFormat();
             audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat, audioBytes.length / audioFormat.getFrameSize());
@@ -198,11 +157,7 @@ public class RecordAndPlay extends JFrame {
             sourceDataLine.open(audioFormat);
             sourceDataLine.start();
 
-            //Create a thread to play back
-            // the data and start it
-            // running.  It will run until
-            // all the data has been played
-            // back.
+           
             Thread playThread = new Thread(new PlayThread());
             playThread.start();
         } catch (Exception e) {
@@ -210,14 +165,7 @@ public class RecordAndPlay extends JFrame {
             System.exit(0);
         }//end catch
     }//end playAudio
-    //This method creates and returns an
-    // AudioFormat object for a given set
-    // of format parameters.  If these
-    // parameters don't work well for
-    // you, try some of the other
-    // allowable parameter values, which
-    // are shown in comments following
-    // the declarations.
+    
 
     public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
@@ -231,11 +179,7 @@ public class RecordAndPlay extends JFrame {
         boolean bigEndian = false;
         //true,false
         return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
-    }//end getAudioFormat
-//===================================//
-
-//Inner class to capture data from
-// microphone
+    }
     class CaptureThread extends Thread {
         //An arbitrary-size temporary holding
         // buffer
@@ -246,9 +190,7 @@ public class RecordAndPlay extends JFrame {
             System.out.println("in CaputreThread");
             byteArrayOutputStream = new ByteArrayOutputStream();
             stopCapture = false;
-            try {//Loop until stopCapture is set
-                // by another thread that
-                // services the Stop button.
+            try {
                 while (!stopCapture) {
                     //Read data from the internal
                     // buffer of the data line.
@@ -266,11 +208,7 @@ public class RecordAndPlay extends JFrame {
             }//end catch
             Client.audioData = byteArrayOutputStream.toByteArray();
         }//end run
-    }//end inner class CaptureThread
-//===================================//
-//Inner class to play back the data
-// that was saved.
-
+    }
     class PlayThread extends Thread {
 
         byte tempBuffer[] = new byte[10000];
@@ -285,16 +223,10 @@ public class RecordAndPlay extends JFrame {
                 // empty stream.
                 while ((cnt = audioInputStream.read(tempBuffer, 0, tempBuffer.length)) != -1) {
                     if (cnt > 0) {
-                        //Write data to the internal
-                        // buffer of the data line
-                        // where it will be delivered
-                        // to the speaker.
+                        
                         sourceDataLine.write(tempBuffer, 0, cnt);
                     }//end if
-                }//end while
-                //Block and wait for internal
-                // buffer of the data line to
-                // empty.
+                }
                 sourceDataLine.drain();
                 sourceDataLine.close();
             } catch (Exception e) {
@@ -303,6 +235,5 @@ public class RecordAndPlay extends JFrame {
             }//end catch
         }//end run
     }//end inner class PlayThread
-//===================================//
 
-}//end outer class RecordAndPlay.java
+}

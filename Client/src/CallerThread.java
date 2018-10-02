@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+     /**
+     * @param args the command line arguments
+     */
 public class CallerThread extends Thread {
 
     private static String myIP;
@@ -39,7 +42,9 @@ public class CallerThread extends Thread {
         }
 
     }
-
+    /**
+     * This method connects the sockets of th caller and the receiver by informing the serve
+     */
     public static void connectSockets() {
         try {
 

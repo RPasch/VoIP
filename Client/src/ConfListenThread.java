@@ -11,6 +11,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
+    /**
+     *The class that is responsible for listening to conference call audio
+     */
 public class ConfListenThread extends Thread {
 
     private DatagramSocket socket;
@@ -29,7 +32,10 @@ public class ConfListenThread extends Thread {
         this.socket = socket;
         this.tempBuffer = new byte[BUFFER_SIZE];
     }
-
+    
+    /**
+     * The method that is run on this thread that receives udp from the others and plays it
+     */
     @Override
     public void run() {
         try {
@@ -69,7 +75,9 @@ public class ConfListenThread extends Thread {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    /**
+     * The audio format of the audio
+     */
     public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;
         //8000,11025,16000,22050,44100

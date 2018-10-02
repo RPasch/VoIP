@@ -8,6 +8,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The class that handles all the sockets and is in control of all the currently 
+ * connected clients. It removes , add clients , updates the gui and responds to 
+ * Clients by acting as a proxy and sending special characters
+ */
 public class SocketHandler implements Runnable {
 
     private String username;
@@ -20,6 +25,10 @@ public class SocketHandler implements Runnable {
         this.clientSocket = clientSocket;
     }
 
+ /**
+ *Manages all the special characters that is sent and received from the clients
+ * and calls the corresponding methods.
+ */
     @Override
     public void run() {
         System.out.println("new client thread created");

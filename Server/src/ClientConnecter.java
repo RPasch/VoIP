@@ -9,6 +9,10 @@ import java.net.Socket;
 //import static rw354_tut1_server.Server.inFromClient;
 //import static rw354_tut1_server.Server.outFromServer;
 
+/**
+ * The class that connects clients that want to connect via voice note , voice 
+ * call or conference call
+ */
 public class ClientConnecter extends Thread {
     
     ServerSocket serverSocket = null;
@@ -22,7 +26,10 @@ public class ClientConnecter extends Thread {
         this.serverSocket = serverSocket;
         this.clientSocket = clientSocket;
     }
-    
+    /**
+    * Opens sockets and data streams for the respective clients and responds
+    * It updates the gui as well
+    */
     @Override
     public void run(){
         while(true){

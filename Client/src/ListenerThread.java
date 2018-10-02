@@ -11,6 +11,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
+     /**
+     *The class that is responsible for listening to voice note audio
+     */
 public class ListenerThread extends Thread {
 
     private DatagramSocket socket;
@@ -29,6 +32,10 @@ public class ListenerThread extends Thread {
         this.socket = socket;
         this.tempBuffer = new byte[BUFFER_SIZE];
     }
+    
+    /**
+     * The method that is run on this thread that receives udp from the others and plays it
+     */
 
     @Override
     public void run() {
@@ -68,6 +75,10 @@ public class ListenerThread extends Thread {
             Logger.getLogger(CallerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * The audio format of the audio
+     */
 
     public AudioFormat getAudioFormat() {
         float sampleRate = 8000.0F;

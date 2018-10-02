@@ -35,7 +35,14 @@ public class waitForMessage extends Thread {
         this.chat = chat;
 
     }
-
+    
+     /**
+     * Checks if you want to play the voice note and starts the gui, if accepted
+     * it will play the audio
+     * @params userIPtoCall the user's IP that you want to call
+     * @param userNametoCall The user's name that you wish to call
+     */
+    
     public static void receiveVoiceNote(byte[] audioData, String userFrom) {
         JDialog.setDefaultLookAndFeelDecorated(true);
         System.out.println("Received a VN from " + userFrom);
@@ -54,7 +61,15 @@ public class waitForMessage extends Thread {
         }
 
     }
-
+    
+    /**
+     * This method checks if you are calling or receiving and informs the server
+     * It checks if you want to decline or accept the call and starts the
+     * related gui
+     * @params userIPtoCall the user's IP that you want to call
+     * @param userNametoCall The user's name that you wish to call
+     */
+    
     public static void createCallThread(String userIPtoCall, String userNametoCall) {
         boolean answered = false;
         if (!Client.madeCall) {
@@ -153,26 +168,6 @@ public class waitForMessage extends Thread {
                     String userFrom = Client.receiveMsg();
                     System.out.println(userFrom + "userFrom");
                     byte[] audioData = Client.receiveAudioData();
-
-//                    String weird = Client.receiveMsg();
-//                    String weird1 = Client.receiveMsg();
-//                    String weird2 = Client.receiveMsg();
-//                    System.out.println(weird + " weird");
-//                    System.out.println(weird1 + " weird1");
-//                    System.out.println(weird2 + " weird2");
-//                    System.out.println("RECEIVED !!!!!!!!!!");
-//                    String weird11 = Client.receiveMsg();
-//                    String weird12 = Client.receiveMsg();
-//                    String weird22 = Client.receiveMsg();
-//                    System.out.println(weird11 + " weird");
-//                    System.out.println(weird12 + " weird1");
-//                    System.out.println(weird22 + " weird2");
-//                    String weird23 = Client.receiveMsg();
-//                    String weird13 = Client.receiveMsg();
-//                    String weird33 = Client.receiveMsg();
-//                    System.out.println(weird23 + " weird");
-//                    System.out.println(weird13 + " weird1");
-//                    System.out.println(weird33 + " weird2");
                     receiveVoiceNote(audioData, userFrom);
                     break;
                 case '^':
@@ -203,7 +198,9 @@ public class waitForMessage extends Thread {
 
         }
     }
-
+    /**
+     * Simply converts IP to INet address
+     */
     public static void convertIPtoInet() {
         try {
             ArrayList<InetAddress> temp = new ArrayList<>();
